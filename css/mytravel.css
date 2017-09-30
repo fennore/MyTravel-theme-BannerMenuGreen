@@ -1,0 +1,144 @@
+.intro > article,
+.info > article {
+  padding: 1em 2em 1em;
+  border-radius: 3px;
+}
+.info .written p,
+.info .written h2 {
+  clear: both;
+  padding: 0 10%;
+}
+.info .written:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.intro > article{
+  text-align: center;
+  padding-top: 2em;
+}
+.intro > article p {
+  text-align: left;
+  display: inline-block;
+}
+
+.image > figure {
+  -webkit-transition: all .5s ease-out;
+  -moz-transition: all .5s ease-out;
+  -o-transition: all .5s ease-out;
+  transition: all .5s ease-out;
+  padding: .5em 1em 1em;
+  border-radius: 3px;
+}
+.image > figure.minify {
+  padding: 0;
+  background: 0 none;
+  margin:  0 1em 1em;
+  opacity: .8;
+  height: 10em;
+  max-height: 10em;
+}
+.image > figure.marked img {
+  border: 3px solid orange;
+}
+
+.manage figure details,
+.manage figure img,
+.manage figure .description {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.minify .description,
+.minify figcaption,
+.minify .img-type-selection,
+.minify details {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+}
+
+.apisync.title,
+.apisync.description,
+#geo-loc-root span {
+  border-bottom: 1px dashed #444;
+}
+
+.apisync.title.active,
+.apisync.description.active,
+#geo-loc-root .active span {
+  border-bottom-color: orange;
+}
+
+#geo-loc-root .active {
+  color: orange;
+}
+
+.linkstory {
+  white-space: nowrap;
+  background-color:burlywood;
+  display: block;
+}
+.linkstory:hover {
+  color: orange;
+}
+.linkstory.selected {
+  background-color:#aaffaa;
+  color: #44ff44;
+}
+
+.apisync.linktimeline {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-color: azure;
+}
+.apisync.linktimeline:hover {
+  cursor: pointer;
+}
+.apisync.linktimeline.active {
+  border: 0 none;
+}
+.apisync.linktimeline[data-timeline="1"] {
+  background-color: #aaffaa;
+}
+.apisync.linktimeline[data-timeline="0"] {
+  background-color: #ffaaaa;
+}
+
+.story-select {
+  display: inline-block;
+  width: 0;
+  height: 40px;
+  background-color: burlywood;
+  overflow: hidden;
+  margin-left: .5em;
+}
+
+.story-select:hover {
+  cursor: pointer;
+  overflow: visible;
+}
+
+.manage > figure,
+.manage.route {
+  background-color: rgba(255,255,255, 0.8);
+}
+.manage > figure {
+  max-width: 50em;
+  pointer-events: auto;
+}
+.manage.image {
+  pointer-events: none;
+}
+
+@media screen and (min-width: 720px) {
+  .manage > figure details,
+  .manage > figure img {
+    max-width: 24%;
+  }
+  figure .description,
+  .timeline > figure.focus > a {
+    max-width: 50%;
+  }
+}

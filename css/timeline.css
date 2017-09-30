@@ -1,0 +1,324 @@
+#timeline-in-focus img,
+#timeline-in-focus figcaption {
+  -webkit-transition: opacity .8s;
+  -moz-transition: opacity .8s;
+  -o-transition: opacity .8s;
+  transition: opacity .8s;
+  opacity: 1;
+}
+
+#timeline-in-focus figcaption.retract:hover {
+  opacity: 1;
+}
+#timeline-in-focus.slide-stage-blur img,
+#timeline-in-focus.slide-stage-blur figcaption,
+#timeline-in-focus figcaption.retract {
+  opacity: 0;
+}
+.timeline {
+  overflow: hidden;
+  pointer-events: none;
+}
+.timeline button:focus,
+.timeline button::-moz-focus-inner {
+  outline-style:none;
+  box-shadow:none;
+  border-color:transparent;
+}
+.timeline figure {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  height: 100%;
+  background: rgba(34, 34, 34, .3);
+  pointer-events:auto;
+}
+.timeline figure img {
+  display: inline-block;
+  width: auto;
+  height: auto;
+  max-height: 100%;
+  max-width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+.timeline figure h1 {
+  position: absolute;
+  top: 50%;
+  margin-top: -3em;
+  left: 15%;
+  right: 15%;
+  color: #f8fff8;
+}
+.timeline figure figcaption {
+  position: absolute;
+  bottom: 25%;
+  left: 25%;
+  max-width: 50%;
+  white-space: pre-line;
+  opacity: 1;
+}
+figcaption.empty {
+  display: none;
+}
+.timeline figure button {
+  position: fixed;
+  display: block;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: none;
+  width: 25%;
+  overflow: hidden;
+  text-indent: -200%;
+}
+.timeline figure button .icon {
+  -webkit-transition: left 1s, right 1s;
+  -moz-transition: left 1s, right 1s;
+  -o-transition: left 1s, right 1s;
+  transition: left 1s, right 1s;
+  position: absolute;
+  bottom: 40%;
+  width: 1.4em;
+  height: 4em;
+  left: .25em;
+}
+.timeline figure button.retract .icon {
+  left: -2em;
+}
+.timeline figure button.img-next {
+  left: auto;
+  right: 0;
+}
+.timeline figure button.img-next .icon {
+  left: auto;
+  right: 0;
+}
+.timeline figure button.img-next.retract .icon {
+  right: -2em;
+}
+.timeline .description {
+  padding-left: 1em;
+}
+.timeline-slide-wrapper {
+  -webkit-transition: opacity .6s;
+  -moz-transition: opacity .6s;
+  -o-transition: opacity .6s;
+  transition: opacity .6s;
+  opacity: .2;
+  position: fixed;
+  bottom: 1.5em;
+  left: 0;
+  width: 100%;
+  pointer-events:auto;
+}
+.timeline-slide-wrapper.retract {
+  opacity: 0;
+}
+.timeline-slide-wrapper.retract:hover {
+  opacity: 1;
+}
+.timeline-slide {
+  -webkit-transition: transform .5s ease-in-out, opacity .6s;
+  -moz-transition: transform .5s ease-in-out, opacity .6s;
+  -o-transition: transform .5s ease-in-out, opacity .6s;
+  transition: transform .5s ease-in-out, opacity .6s;
+  white-space: nowrap;
+  display: block;
+  line-height: 0;
+}
+.timeline-slide.no-smooth {
+  -webkit-transition: transform 0s, opacity .3s;
+  -moz-transition: transform 0s, opacity .3s;
+  -o-transition: transform 0s, opacity .3s;
+  transition: transform 0s, opacity .3s;
+}
+.timeline-slide span {
+  display: inline-block;
+  border: 1px solid #222;
+}
+.timeline-slide span.focus,
+.timeline-slide span:hover {
+  border-color: #080;
+  position: relative;
+}
+.timeline-slide span.focus:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #080;
+  opacity: .3;
+}
+.timeline-slide img {
+  display: block;
+  height: 70px;
+  width: 108px;
+}
+.timeline-slide img:before,
+.timeline-slide img:after {
+  display: none;
+}
+.timeline-slide img:hover {
+  cursor: pointer;
+}
+#slide-jumper {
+  -webkit-transition: height 1s, bottom 1s;
+  -moz-transition: height 1s, bottom 1s;
+  -o-transition: height 1s, bottom 1s;
+  transition: height 1s, bottom 1s;
+  height: 2em;
+  margin: 0;
+  overflow: hidden;
+  background-color: #f8fff8;
+  display: inline-block;
+  margin-left: .5em;
+  position: relative;
+  bottom: 0;
+  vertical-align: bottom;
+  list-style: none;
+}
+#slide-jumper:hover {
+  cursor: pointer;
+  height: 6em;
+  bottom: -2em;
+  overflow-y: scroll;
+  z-index: 999;
+}
+#slide-jumper.is-off:hover {
+  cursor: default;
+  height: 2em;
+  bottom: 0;
+  overflow-y: hidden;
+}
+#slide-jumper li {
+  display: block;
+  padding: .3em;
+}
+#slide-jumper li:hover {
+  background-color:#fffff8;
+  color: #080;
+}
+#slide-jumper.is-off li:hover {
+  background-color: transparent;
+  color: inherit;
+}
+.slide-total {
+  display: inline-block;
+  background-color: #f8fff8;
+  padding: .3em .5em;
+  margin-left: .5em;
+  vertical-align: bottom;
+}
+.slide-left,
+.slide-right {
+  position: fixed;
+  bottom: 3em;
+  width: 3em;
+  height: 3em;
+  z-index: 1;
+  border-radius: 50%;
+  text-indent: -500%;
+  overflow: hidden;
+}
+.slide-left .icon,
+.slide-right .icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+.slide-left {
+  left: 0;
+}
+.slide-right {
+  right: 0;
+}
+
+#pager-buttons {
+  position: fixed;
+  top: .5em;
+  width: 100%;
+  text-align: center;
+}
+#pager-buttons button {
+  width: 1.5em;
+  height: 1.5em;
+  position: relative;
+  background: 0 none;
+  pointer-events:auto;
+}
+#pager-buttons button:before {
+  content: '';
+  display: block;
+  position: absolute;
+  background-color: #fefeee;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: .3em;
+  height: .3em;
+}
+#pager-buttons button.pager-active:before {
+  background-color: #080;
+}
+.slide-stage-toggle {
+  -webkit-transition: transform 1s;
+  -moz-transition: transform 1s;
+  -o-transition: transform 1s;
+  transition: transform 1s;
+  position: absolute;
+  top: .7em;
+  right: .5em;
+  color: #cfc;
+  font-size: 4em;
+  font-weight: 100;
+  z-index: 99;
+  display: none;
+}
+.slide-stage-toggle:hover {
+  cursor: pointer;
+  color: #fff;
+}
+
+@media screen and (min-height: 480px) {
+  .timeline-slide img {
+    height: 120px;
+    width: 160px;
+  }
+  .timeline figure figcaption {
+    bottom: 33%;
+  }
+  .slide-stage-toggle {
+    display: block;
+  }
+  #timeline-in-focus.t-out {
+    position: relative;
+    right: -7em;
+    top: -1em;
+    -webkit-transform: translate(-100%, 50%);
+            transform: translate(-100%, 50%);
+  }
+  #timeline-in-focus.t-out button {
+    display: none;
+  }
+  #timeline-in-focus.t-out .slide-stage-toggle {
+    -webkit-transform: rotate(135deg);
+            transform: rotate(135deg);
+  }
+}
+@media screen and (min-width: 720px) {
+  .timeline figure figcaption {
+    left: 33%;
+    max-width: 48em;
+  }
+}

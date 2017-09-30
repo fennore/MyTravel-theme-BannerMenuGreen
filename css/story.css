@@ -1,0 +1,80 @@
+#storystage {
+  -webkit-transition: all .5s ease-out;
+  -moz-transition: all .5s ease-out;
+  -o-transition: all .5s ease-out;
+  transition: all .5s ease-out;
+  position: relative;
+  padding: 4.8em 2em 1em;
+  min-height: 20em;
+}
+#storystage.inactive {
+  display: none;
+  margin: 0;
+}
+#storystage > article,
+#storystage + article {
+  padding: 1em 0;
+  background: #eefeee url(../views/default/img/bg-written.jpg);
+  text-align: center;
+}
+#storystage article footer,
+#storystage + article footer {
+  padding-left: .7em;
+}
+.story .written {
+  display: inline-block;
+  background: 0 none;
+  text-align: left;
+}
+.story button {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  text-indent: -12em;
+  top: 8em;
+  bottom: 1em;
+  width: 1.5em;
+  background: 0 none;
+}
+.story button:focus,
+.story button::-moz-focus-inner {
+  outline-style:none;
+  box-shadow:none;
+  border-color:transparent;
+}
+.story button .icon {
+  position: absolute;
+  top: 50%;
+  width: 1.4em;
+  height: 2em;
+}
+.story button.prev {
+  left: 0;
+}
+.story button.prev .icon {
+  left: 0;
+}
+.story button.next {
+  right: 0;
+  width: 2.4em;
+  border-left: 1px solid #ddd;
+}
+.story button.next .icon {
+  right: 0;
+}
+
+@media screen and (min-width: 720px) {
+  #storystage {
+    padding: 6em 0 0;
+  }
+  #storystage article .written {
+    padding: 1em 8em 1em 2em;
+  }
+  .story button.next {
+    width: 7.4em;
+  }
+  #storystage article footer {
+    padding-right: 7.4em;
+    padding-left: 2em;
+  }
+}

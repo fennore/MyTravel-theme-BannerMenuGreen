@@ -1,0 +1,145 @@
+@import url(https://fonts.googleapis.com/css?family=Indie+Flower|Titillium+Web:400,700);
+/* main colors:
+ green 080
+ paper-white ffffef
+ almost-black 111
+*/
+html {
+  height: 100%;
+}
+html, body {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+  line-height: 1.4em;
+  box-sizing: border-box;
+  font-family: 'Titillium Web', sans-serif;
+  background-color: #efefef;
+}
+body {
+  overflow-x: hidden;
+  min-height: 100%;
+}
+body > svg {
+  display: none;
+  height: 0;
+  max-height: 0;
+  overflow: hidden;
+}
+svg {
+  pointer-events: none;
+}
+div, section, article, figure {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  display: block;
+  vertical-align: top;
+}
+p {
+  margin: 0 0 1em;
+  padding: 0;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+img {
+  -webkit-transition: all .3s ease-out;
+  -moz-transition: all .3s ease-out;
+  -o-transition: all .3s ease-out;
+  transition: all .3s ease-out;
+  max-width: 100%;
+  height: auto; /* required to let image scale correctly */
+}
+h1 {
+  text-align: center;
+  margin: 0 0 .3em;
+  font-size: 1.8em;
+}
+
+ul {
+  margin-top: 0;
+}
+
+figure > a {
+  display: inline-block;
+  text-decoration: none;
+}
+
+button {
+  padding: 0;
+  border: 0 none;
+  background: #fff;
+  background: rgba(255,255,255, .95);
+  display: inline-block;
+}
+button:hover {
+  cursor: pointer;
+}
+button .icon {
+  height: 2em;
+  fill: #222;
+}
+button[disabled] {
+  color: #efefef;
+}
+button[disabled]:hover {
+  cursor: default;
+}
+button[disabled] .icon,
+button[disabled]:hover .icon {
+  fill: #efefef;
+}
+button:hover .icon {
+  fill:#080;
+}
+
+article {
+  overflow: hidden;
+  vertical-align: top;
+}
+article > footer {
+  padding-top: 2em;
+}
+article > footer figure {
+  display: inline-block;
+  max-width: 30%;
+  margin-right: 3%;
+}
+
+.written {
+  font-family: 'Indie Flower', cursive;
+  background: #eefeee url(../views/default/img/bg-written.jpg);
+  font-size: 1em;
+  line-height: 1.4em;
+  padding: .5em .7em;
+  border-radius: 1px;
+}
+
+.changed {
+  background-color: #f88;
+}
+.updated,
+.loc-anchor {
+  background-color: #8f8;
+}
+
+.r-align {
+  float: right;
+}
+
+@media screen and (min-width: 720px) {
+  h1 {
+    margin-bottom: .5em;
+  }
+  .written {
+    font-size: 1.1em;
+    line-height: 1.55em;
+    padding: .5em 1em;
+  }
+}

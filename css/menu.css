@@ -1,0 +1,149 @@
+a .icon {
+  -webkit-transition: all .3s;
+  -moz-transition: all .3s;
+  -o-transition: all .3s;
+  transition: all .3s;
+  display: inline-block;
+  width: 2.5em;
+  height: 2.5em;
+  stroke-width: 0;
+  fill: #222;
+  vertical-align: middle;
+  margin: 0 .25em;
+  pointer-events: none;
+}
+a.current .icon {
+  fill: #080;
+}
+a.current:hover .icon {
+  fill: #222;
+  color: #222;
+}
+#menu {
+  font-size: 0.7em;
+  overflow: hidden;
+  padding-right: 2em;
+}
+#menu a {
+  -webkit-transition: color .3s, text-indent .5s, left .3s, transform .3s, width .3s, opacity .5s, text-align 0s .5s;
+  -moz-transition: color .3s, text-indent .5s, left .3s, transform .3s, width .3s, opacity .5s, text-align 0s .5s;
+  -o-transition: color .3s, text-indent .5s, left .3s, transform .3s, width .3s, opacity .5s, text-align 0s .5s;
+  transition: color .3s, text-indent .5s, left .3s, transform .3s, width .3s, opacity .5s, text-align 0s .5s;
+  display: block;
+  color: #222;
+  background-color: #f8fff8;
+  height: 3em;
+  text-decoration: none;
+  vertical-align: middle;
+  margin-bottom: .4em;
+  border-radius: 1px;
+  line-height: 3em;
+  padding: 0 3.5em 0 .5em;
+  position: relative;
+  text-indent: 0;
+  box-sizing: border-box;
+  opacity: 1;
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+  left: 3.5em;
+}
+#menu a:hover {
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
+  left: 0;
+}
+#menu a .icon {
+  position: absolute;
+  right: .25em;
+  top: 50%;
+  -webkit-transform: translateY(-50%) rotate(-90deg);
+          transform: translateY(-50%) rotate(-90deg);
+}
+#menu a:before,
+#menu a:after {
+  display: block;
+  position: absolute;
+  content: '';
+  width: 0;
+  height: 0;
+  right: -1.45em;
+  border-width: 1.5em;
+}
+#menu a:before {
+  border-style: solid solid solid none;
+  border-color: #f8fff8 transparent transparent transparent;
+  top: 0;
+}
+#menu a:after {
+  border-style: solid solid solid none;
+  border-color: transparent transparent #f8fff8 transparent;
+  bottom: 0;
+}
+#menu a.current {
+  color: #080;
+}
+#menu a:hover {
+  color: #222; 
+}
+#menu a:hover .icon {
+  fill: #080;
+}
+#content.timeline + #menu.retract a {
+  opacity: .7;
+}
+#content.timeline + #menu a.is-linked {
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
+  background-color: #ccffcc;
+  text-indent: 0;
+  left: 0;
+}
+#content.timeline + #menu a.is-linked:before {
+  border-color: #ccffcc transparent transparent transparent;
+}
+#content.timeline + #menu a.is-linked:after {
+  border-color: transparent transparent #ccffcc transparent;
+}
+#content.timeline + #menu.retract:hover a,
+#menu.retract:hover a {
+  opacity: 1;
+}
+
+#menu-minor a {
+  color: #222;
+  font-size: .7em;
+}
+#menu-minor a + a {
+  float: right;
+  margin-left: .6em;
+}
+#menu-minor a:hover {
+  color: #080;
+}
+
+@media screen and (min-height: 360px) and (min-width: 720px) {
+  #menu {
+    font-size: 1em;
+  }
+  #menu a {
+    height: 4.2em;
+    line-height: 4.2em;
+  }
+  #menu a:before,
+  #menu a:after {
+    border-width: 2.1em;
+    right: -2.04em;
+  }
+  #content.timeline + #menu a,
+  #content.timeline + #menu a:hover {
+    left: 0;
+  }
+  #menu a.current,
+  #menu a:hover {
+    color: #080;
+    text-indent: 0;
+  }
+  #menu a:hover {
+    color: #222;
+  }
+}
