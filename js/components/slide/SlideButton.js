@@ -21,10 +21,14 @@ App.Components.SlideButton = function(buttonInfo) {
     '</button>';
 };
 
+App.Components.SlideButton.prototype.getElement = function() {
+  return this.buttonElement;
+};
+
 App.Components.SlideButton.prototype.render = function() {
   if(!this.buttonElement || !document.body.contains(this.buttonElement)) {
-    this.parent.stageElement.insertAdjacentHTML('afterbegin', this.template);
-    this.buttonElement = this.parent.stageElement.querySelector('button.' + this.btnClass);
+    this.parent.getElement().insertAdjacentHTML('beforeend', this.template);
+    this.buttonElement = this.parent.getElement().querySelector('button.' + this.btnClass);
   }
   return this;
 };

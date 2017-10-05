@@ -12,7 +12,6 @@ App.Components.Slide = function(slideData) {
   this.init = null;
   this.total = 0;
   this.isLoading = false;
-  this.viewWidth = 0;
   this.transformValue = 0;
   this.moveRoot = 0;
   this.moveNext = 0;
@@ -30,13 +29,37 @@ App.Components.Slide = function(slideData) {
   this.storageKey = slideData.storageKey;
   //
   this.dataList;
-};
-App.Components.Slide.prototype.render = function() {
-  if(this.stage) {
-    this.stage.render();
+  // If there is a carrousel, set the slide as its parent Component
+  if(this.carrousel) {
+    this.carrousel.setParent(this);
   }
+  if(this.stage) {
+    this.stage.setParent(this);
+  }
+  if(this.pager) {
+    this.pager.setParent(this);
+  }
+};
+
+/**
+ * Standalone callback render function
+ * @param {Model} item Model with viewAsCarrouselItem function
+ * @returns {string}
+ */
+App.renderCarrouselItem = function(item) {
+  return item.viewAsCarrouselItem();
+};
+
+/**
+ * 
+ * @returns {undefined}
+ */
+App.Components.Slide.prototype.render = function() {
   if(this.carrousel) {
     this.carrousel.render();
+  }
+  if(this.stage) {
+    this.stage.render();
   }
   if(this.pager) {
     this.pager.render();
@@ -53,10 +76,8 @@ App.Components.Slide.prototype.render = function() {
   if(this.btnSlidePrev) {
     this.btnSlidePrev.render();
   }
-  // Add events
-  // on window resize
-  App.Events.add(new App.Models.Event('resize', window, this.updateSlideWidth.bind(this)));
 };
+
 /**
  * 
  * @returns {Number}
@@ -65,10 +86,11 @@ App.Components.Slide.prototype.setInitialPositions = function() {
   var stored = parseInt(localStorage.getItem(this.storageKey)) || 0;
   this.init = Math.max(Math.floor(stored/this.sizeRequest) - 1, 0)*this.sizeRequest;
   this.currentItem = stored - this.init;
+  console.log(stored, this.init, this.currentItem);
   return this;
 };
+
 /**
- * 
  * @param {Number} key Absolute position in slide of item
  * @returns {Number}
  */
@@ -77,14 +99,7 @@ App.Components.Slide.prototype.calculateSlideBase = function(key) {
   var multiplierLimit = Math.max(Math.ceil((this.total - this.sizeSlide)/this.sizeRequest), 0);
   return Math.min(multiplierBase*this.sizeRequest, multiplierLimit*this.sizeRequest);
 };
-/**
- * 
- */
-App.Components.Slide.prototype.updateSlideWidth = function() {
-  App.Timers.add('slidewidthonresize', function() {
-    this.slideWidth = this.carrousel.carrouselElement.parentNode.offsetWidth;
-  }, 150);
-};
+
 /**
  * Recursive function to set the SlideNext key.
  * This is the first carrousel item towards the end that is not fully visible.
@@ -92,7 +107,7 @@ App.Components.Slide.prototype.updateSlideWidth = function() {
  * @returns {App.Components.Slide.prototype@call;findItemSlideNext|Number}
  */
 App.Components.Slide.prototype.findItemSlideNext = function(key) {
-  if(!key) {
+  if(!key && key !== 0) {
     key = this.currentItem;
   }
   if(!this.dataList[key] || !this.dataList[key + 1] || !this.carrousel) {
@@ -102,7 +117,7 @@ App.Components.Slide.prototype.findItemSlideNext = function(key) {
   }
   var elm = this.carrousel.carrouselElement.children[++key];
   // check if the right side of the element is outside of the parent wrapper
-  var transformCheckNext = this.carrousel.transformCheckNext(elm); // elm.offsetLeft - this.slideCurrentOffset + elm.offsetWidth > this.slideWidth;
+  var transformCheckNext = this.carrousel.transformCheckNext(elm); //
 
   if(elm && transformCheckNext) {
     this.moveNext = key;
@@ -111,6 +126,7 @@ App.Components.Slide.prototype.findItemSlideNext = function(key) {
     return this.findItemSlideNext(key);
   }
 };
+
 /**
  * Recursive function to set the SlidePrev key.
  * This is the first carrousel item towards the begin that is not fully visible.
@@ -118,18 +134,19 @@ App.Components.Slide.prototype.findItemSlideNext = function(key) {
  * @returns {App.Components.Slide.prototype@call;findItemSlidePrev|Number}
  */
 App.Components.Slide.prototype.findItemSlidePrev = function(key) {
-  if(!key) {
+  if(!key && key !== 0) {
     key = this.currentItem;
   }
   if(!this.dataList[key] || !this.dataList[key - 1] || !this.carrousel) {
     // return the last valid key
     // because it could not be visible being positioned on the left
-    return key;
+    this.movePrev = 0;
+    return this.movePrev;
   }
   var elm = this.carrousel.carrouselElement.children[key - 1];
   // check if the left side of the element
   // is positioned more than 1 parent width left
-  var transformCheckPrev = this.carrousel.transformCheckPrev(elm); // Math.abs(elm.offsetLeft - this.slideCurrentOffset) > this.slideWidth;
+  var transformCheckPrev = this.carrousel.transformCheckPrev(elm);
   if(elm && transformCheckPrev) {
     this.movePrev = key;
     return key;
@@ -137,6 +154,7 @@ App.Components.Slide.prototype.findItemSlidePrev = function(key) {
     return this.findItemSlidePrev(--key);
   }
 };
+
 /**
  * 
  * @param {type} diff
@@ -150,6 +168,7 @@ App.Components.Slide.prototype.updateState = function(diff) {
   this.movePrev += diff;
   this.moveRoot += diff;
 };
+
 /**
  * 
  * @returns {undefined}
@@ -189,7 +208,6 @@ App.Components.Slide.prototype.slideToItem = function(offset) {
   this.newCurrentItem = offset - this.init;
   this.disableButtons();
   //
-  // Do not do the slide action when the slide is still loading
   if(this.stage) {
     addClass(this.stage.stageElement, App.cssClasses.loading);
   }
@@ -213,6 +231,13 @@ App.Components.Slide.prototype.build = function(items) {
     return this;
   }
   this.dataList = items;
+  // Render Carrousel
+  if(this.carrousel) {
+    this.carrousel.getElement().insertAdjacentHTML(
+      'afterbegin',
+      items.map(App.renderCarrouselItem).join('')
+    );
+  }
   this.updateSlide();
   return this;
 };
@@ -224,6 +249,13 @@ App.Components.Slide.prototype.build = function(items) {
 App.Components.Slide.prototype.prepend = function(items) {
   // Set "Virtual DOM"
   Array.prototype.unshift.apply(this.dataList, items);
+  // Render Carrousel
+  if(this.carrousel) {
+    this.carrousel.getElement().insertAdjacentHTML(
+      'afterbegin',
+      items.map(App.renderCarrouselItem).join('')
+    );
+  }
   this.rightTrim();
   this.isLoading = false;
   this.updateSlide();
@@ -237,6 +269,13 @@ App.Components.Slide.prototype.prepend = function(items) {
 App.Components.Slide.prototype.append = function(items) {
   // Set "Virtual DOM"
   Array.prototype.push.apply(this.dataList, items);
+  // Render Carrousel
+  if(this.carrousel) {
+    this.carrousel.getElement().insertAdjacentHTML(
+      'beforeend',
+      items.map(App.renderCarrouselItem).join('')
+    );
+  }
   this.leftTrim();
   this.isLoading = false;
   this.updateSlide();
@@ -274,23 +313,31 @@ App.Components.Slide.prototype.rightTrim = function() {
   return this;
 };
 
+/**
+ * 
+ * @returns {App.Components.Slide.prototype}
+ */
 App.Components.Slide.prototype.updateSlide = function() {
   if(this.isLoading) {
     return this;
   }
+  // Update moveNext and movePrev
+  this.findItemSlidePrev();
+  this.findItemSlideNext();
   // show stage
   this.show();
   // slide the carrousel
   this.updateCarrousel();
   // update pager
-  
+  this.updatePager()
   // update slide nav
-  
+  this.updateSlideNav();
   // Enable buttons
   this.enableButtons();
   
   return this;
-}
+};
+
 /**
  * Show the current Item in the stage
  * @returns {App.Components.Slide}
@@ -310,27 +357,31 @@ App.Components.Slide.prototype.show = function() {
   }
   return this;
 };
+
 /**
- * Update the carrousel
+ * 
+ * @returns {App.Components.Slide.prototype}
  */
 App.Components.Slide.prototype.updateCarrousel = function() {
   if(!this.carrousel) {
     return this;
   }
-  this.slide.update();
+  this.carrousel.update();
   // Make sure there is no transition disabled
   rmClass(this.carrousel.carrouselElement, App.cssClasses.disableTransition);
   // Set focus
   addClass(this.carrousel.getFocusElement(), App.cssClasses.focus);
+  // Only slide if currentItem is out of visible scope
+  var checkBefore = this.moveRoot > this.currentItem;
+  var checkAfter = this.currentItem >= this.moveNext;
+  // Set new move root
+  if(checkBefore || checkAfter) {
+    this.moveRoot = this.currentItem;
+  } else {
+    return this;
+  }
   // Find new offset
   this.transformValue = this.carrousel.getTransformValue();
-  // Only slide if currentItem is out of visible scope
-  var checkLeft = this.moveRoot > this.currentItem;
-  var checkRight = this.currentItem >= this.moveNext;
-  // Set new move root
-  if(checkLeft || checkRight) {
-    this.moveRoot = this.currentItem;
-  }
   // Tranform
   var tf = (this.carrousel.transformType || 'translateX') + '(-' + this.transformValue + 'px)';
   this.carrousel.carrouselElement.style.msTransform = tf;
@@ -338,21 +389,30 @@ App.Components.Slide.prototype.updateCarrousel = function() {
   this.carrousel.carrouselElement.style.webkitTransform = tf;
   this.carrousel.carrouselElement.style.OTransform = tf;
   this.carrousel.carrouselElement.style.transform = tf;
-}
+  return this;
+};
 
+/**
+ * 
+ * @returns {App.Components.Slide.prototype}
+ */
 App.Components.Slide.prototype.updatePager = function() {
   if(!this.pager) {
     return this;
   }
-  this.setPager();
-  this.setPagerCurrent(this.currentItem - this.moveRoot);
-}
+  this.pager.update();
+  this.pager.setCurrent();
+};
 
+/**
+ * 
+ * @returns {undefined}
+ */
 App.Components.Slide.prototype.updateSlideNav = function() {
   if(this.carrousel) {
     
   }
-}
+};
 
 /**
  *
@@ -385,7 +445,7 @@ App.Components.Slide.prototype.enableButtons = function() {
   if(this.btnPrev && (this.currentItem > 0 || this.init > 0)) {
     this.btnPrev.enable();
   }
-  if(this.btnSlideNext && this.moveNext < this.findItemSlideNext()) {
+  if(this.btnSlideNext && this.moveNext > this.moveRoot) {
     this.btnSlideNext.enable();
   }
   if(this.btnSlidePrev && this.movePrev > this.findItemSlidePrev()) {

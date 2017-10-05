@@ -33,9 +33,9 @@ App.Components.Menu.prototype.reset = function() {
 };
 
 App.Components.Menu.prototype.retract = function() {
-  rmClass(this.menuElement, App.cssClasses.menuRetract);
+  addClass(this.menuElement, App.cssClasses.menuRetract);
 };
 
 App.Components.Menu.prototype.extend = function() {
-  addClass(this.menuElement, App.cssClasses.menuRetract);
+  rmClass(this.menuElement, App.cssClasses.menuRetract);
 };

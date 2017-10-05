@@ -49,7 +49,8 @@
       {% endif %}      
     </nav>
     {% block footer %}
-    <!-- script tags can go here -->
+    <!-- script tags can go here @todo modernize and split bundle into async and defer -->
+    <div id="script-wrapper">
     <!--<script src="https://maps.googleapis.com/maps/api/js?key={{apikey}}&libraries=geometry"></script>
     <!-- Velocity... once upon a time <script src="js/lib/velocity.min.js"></script>-->
     <!-- Core JS file -->
@@ -60,6 +61,7 @@
     <script src="{{asset('lib/navigo.min.js')}}"></script>
     <!--<script src="{{asset('vue', 'cdn')}}"></script>-->
     <script src="{{path('jsbundle')}}"></script>
+    </div>
     {% endblock %}
   </body>
 </html>

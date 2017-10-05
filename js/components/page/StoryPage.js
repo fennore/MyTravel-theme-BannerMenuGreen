@@ -9,6 +9,10 @@ App.Components.StoryPage = function(pageInfo) {
   // Set the story slide
   this.storySlide = new App.Components.StorySlide();
 };
+
+App.Components.StoryPage.prototype.getElement = function() {
+  return this.pageElement;
+};
 /**
  * Render story page.
  * Currently only has the story slide.

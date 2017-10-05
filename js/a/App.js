@@ -1,9 +1,18 @@
 App = {
   page : null,
+  scripts : document.getElementById('script-wrapper'),
   menuMain : null,
   menuMinor : null,
   previousPage : null,
   Router: null,
+  Map: null,
+  //
+  Settings : {
+    DefaultLocation: {lat: 53, lng: 11},
+    MapZoomDefault: 7,
+    MapZoomLocation: 15,
+    MapZoomOverview: 4,
+  },
   // Expansive objects
   Models : function() {},
   Components : function() {},
@@ -11,13 +20,16 @@ App = {
   Actions : function() {},
   Storage : function() {},
   Timers : new function() {},
+  //
+  GmapStyle : function() {},
   // Some css class collection
   cssClasses : {
     mainMenuActive: 'current',
     menuRetract: 'retract',
     loading: 'loading',
     focus: 'focus',
-    disableTransition: 'no-smooth'
+    disableTransition: 'no-smooth',
+    toggleOut: 'toggle-out'
   },
   // Render method
   render : function() {
@@ -29,6 +41,12 @@ App = {
     }
     if(this.menuMinor) {
       this.menuMinor.render();
+    }
+    if(this.menuMinor) {
+      this.menuMinor.render();
+    }
+    if(this.Map) {
+      this.Map.render();
     }
   },
   // Update path

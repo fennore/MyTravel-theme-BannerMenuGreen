@@ -1,1 +1,1 @@
-# MyTravel-theme-BannerMenuGreen
+MyTravel theme BannerMenuGreen

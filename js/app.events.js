@@ -1,4 +1,5 @@
 App.Events.eventList = {};
+
 /**
  * 
  * @param {Event} e
@@ -21,14 +22,27 @@ App.Events.eventsListener = function(e) {
     }
   }
 };
+
 /**
  * Add an event Listener
- * @param {type} type
- * @returns {undefined}
+ * @param {string} type
+ * @returns {App.Events}
  */
 App.Events.addListener = function(type) {
   window.addEventListener(type, this.eventsListener.bind(this), true);
+  return this;
 };
+
+/**
+ * Remove an event Listener
+ * @param {string} type
+ * @returns {App.Events}
+ */
+App.Events.removeListener = function(type) {
+  window.removeEventListener(type, this.eventsListener.bind(this), true);
+  return this;
+};
+
 /**
  * Add an event
  * @param {type} event
@@ -48,5 +62,28 @@ App.Events.add = function(event) {
     }
   }
   this.eventList[event.type].push(event);
+  return this;
+};
+
+/**
+ * Remove an event
+ * @param {string} type
+ * @param {Element} element
+ * @param {callback} cb
+ * @returns {App.Events}
+ */
+App.Events.remove = function(type, element, cb) {
+  if(!this.eventList[type]) {
+    return this;
+  }
+  for(var k in this.eventList[type]){
+    var event = this.eventList[type][k];
+    if(event.element === element && event.cb === cb) {
+      this.eventList[type].splice(k, 1);
+    }
+  }
+  if(this.eventList[type].length === 0) {
+    this.removeListener(type);
+  }
   return this;
 };

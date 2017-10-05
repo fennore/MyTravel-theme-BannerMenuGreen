@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @param {type} pageInfo
+ * @returns {App.Components.TimelinePage}
+ */
 App.Components.TimelinePage = function(pageInfo) {
   this.pageElement = document.getElementById('content');
   this.template = '<main id="content"></main>';
@@ -8,6 +12,10 @@ App.Components.TimelinePage = function(pageInfo) {
   this.menuLink = pageInfo.menuLink;
   this.linkedStoryPosition = null;
   this.timelineSlide = new App.Components.TimelineSlide();
+};
+
+App.Components.TimelinePage.prototype.getElement = function() {
+  return this.pageElement;
 };
 
 App.Components.TimelinePage.prototype.render = function() {

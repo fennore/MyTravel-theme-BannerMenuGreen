@@ -6,6 +6,11 @@ App.Components.SimplePage = function (pageInfo) {
   this.wrapClass = pageInfo.wrapClass;
   this.menuLink = pageInfo.menuLink;
 };
+
+App.Components.SimplePage.prototype.getElement = function() {
+  return this.pageElement;
+};
+
 App.Components.SimplePage.prototype.render = function() {
   if(!this.pageElement || !document.body.contains(this.pageElement)) {
     document.body.insertAdjacentHTML('afterbegin', this.template);

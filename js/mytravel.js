@@ -60,5 +60,6 @@ App.menuMain = new App.Components.Menu('menu', [
 App.menuMinor = new App.Components.Menu('menu-minor', [
   new App.Components.MenuLink(null, '', 'Intro')
 ]);
+App.Map = new App.Components.MapBackground();
 App.render();
 console.log(App.Events.eventList);

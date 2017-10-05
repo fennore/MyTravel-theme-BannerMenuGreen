@@ -3,6 +3,19 @@ App.Components.StoryStage = function() {
   this.template = '<section id="storystage" class="inactive"></section>';
 };
 
+App.Components.StoryStage.prototype.getElement = function() {
+  return this.stageElement;
+}
+/**
+ * Set the parent of the stage, this should be the Slide Component
+ * @param {App.Components.Slide} parent
+ * @returns {App.Components.StoryStage}
+ */
+App.Components.StoryStage.prototype.setParent = function(parent) {
+  this.parent = parent;
+  return this;
+}
+
 App.Components.StoryStage.prototype.render = function() {
   if(!this.stageElement || !document.body.contains(this.stageElement)) {
     App.page.pageElement.insertAdjacentHTML('afterbegin', this.template);

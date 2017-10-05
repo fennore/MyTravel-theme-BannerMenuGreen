@@ -33,6 +33,7 @@ App.Components.StorySlide = function() {
   });
   this.slide.setInitialPositions();
 };
+
 App.Components.StorySlide.prototype.render = function() {
   // Render
   this.slide.render();
@@ -42,6 +43,7 @@ App.Components.StorySlide.prototype.render = function() {
   App.Events.add(new App.Models.Event('click', this.slide.btnPrev.buttonElement, this.switchStory.bind(this)));
   App.Events.add(new App.Models.Event('keypress', null, this.switchStory.bind(this), 37));
 };
+
 App.Components.StorySlide.prototype.build = function(stories) {
   // The first request can be the last items and needs to be bigger than 1 item
   // API knows and returns the new offset if this had to happen
@@ -59,12 +61,14 @@ App.Components.StorySlide.prototype.build = function(stories) {
   this.slide
     .build(storyList);
 };
+
 App.Components.StorySlide.prototype.prepend = function(stories) {
   // Convert to Story objects
   var storyList = stories.list.map(App.Models.createStory);
   this.slide
     .prepend(storyList);
 };
+
 App.Components.StorySlide.prototype.append = function(stories) {
   // Convert to Story objects
   var storyList = stories.list.map(App.Models.createStory);
