@@ -1,6 +1,6 @@
 App.Components.StoryStage = function() {
   this.stageElement = document.getElementById('storystage');
-  this.template = '<section id="storystage" class="inactive"></section>';
+  this.template = '<section id="storystage"></section>';
 };
 
 App.Components.StoryStage.prototype.getElement = function() {

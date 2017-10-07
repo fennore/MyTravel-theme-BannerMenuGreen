@@ -1,5 +1,5 @@
-#timeline-in-focus img,
-#timeline-in-focus figcaption {
+#timeline-stage img,
+#timeline-stage figcaption {
   -webkit-transition: opacity .8s;
   -moz-transition: opacity .8s;
   -o-transition: opacity .8s;
@@ -7,12 +7,12 @@
   opacity: 1;
 }
 
-#timeline-in-focus figcaption.retract:hover {
+#timeline-stage figcaption.retract:hover {
   opacity: 1;
 }
-#timeline-in-focus.slide-stage-blur img,
-#timeline-in-focus.slide-stage-blur figcaption,
-#timeline-in-focus figcaption.retract {
+#timeline-stage.slide-stage-blur img,
+#timeline-stage.slide-stage-blur figcaption,
+#timeline-stage figcaption.retract {
   opacity: 0;
 }
 .timeline {
@@ -90,15 +90,15 @@ figcaption.empty {
 .timeline figure button.retract .icon {
   left: -2em;
 }
-.timeline figure button.img-next {
+.timeline figure button.stage-next {
   left: auto;
   right: 0;
 }
-.timeline figure button.img-next .icon {
+.timeline figure button.stage-next .icon {
   left: auto;
   right: 0;
 }
-.timeline figure button.img-next.retract .icon {
+.timeline figure button.stage-next.retract .icon {
   right: -2em;
 }
 .timeline .description {
@@ -122,7 +122,7 @@ figcaption.empty {
 .timeline-slide-wrapper.retract:hover {
   opacity: 1;
 }
-.timeline-slide {
+#timeline-slide {
   -webkit-transition: transform .5s ease-in-out, opacity .6s;
   -moz-transition: transform .5s ease-in-out, opacity .6s;
   -o-transition: transform .5s ease-in-out, opacity .6s;
@@ -131,22 +131,22 @@ figcaption.empty {
   display: block;
   line-height: 0;
 }
-.timeline-slide.no-smooth {
+#timeline-slide.no-smooth {
   -webkit-transition: transform 0s, opacity .3s;
   -moz-transition: transform 0s, opacity .3s;
   -o-transition: transform 0s, opacity .3s;
   transition: transform 0s, opacity .3s;
 }
-.timeline-slide span {
+#timeline-slide span {
   display: inline-block;
   border: 1px solid #222;
 }
-.timeline-slide span.focus,
-.timeline-slide span:hover {
+#timeline-slide span.focus,
+#timeline-slide span:hover {
   border-color: #080;
   position: relative;
 }
-.timeline-slide span.focus:after {
+#timeline-slide span.focus:after {
   content: '';
   display: block;
   position: absolute;
@@ -157,16 +157,16 @@ figcaption.empty {
   background-color: #080;
   opacity: .3;
 }
-.timeline-slide img {
+#timeline-slide img {
   display: block;
   height: 70px;
   width: 108px;
 }
-.timeline-slide img:before,
-.timeline-slide img:after {
+#timeline-slide img:before,
+#timeline-slide img:after {
   display: none;
 }
-.timeline-slide img:hover {
+#timeline-slide img:hover {
   cursor: pointer;
 }
 #slide-jumper {
@@ -217,8 +217,8 @@ figcaption.empty {
   margin-left: .5em;
   vertical-align: bottom;
 }
-.slide-left,
-.slide-right {
+.carrousel-prev,
+.carrousel-next {
   position: fixed;
   bottom: 3em;
   width: 3em;
@@ -228,18 +228,18 @@ figcaption.empty {
   text-indent: -500%;
   overflow: hidden;
 }
-.slide-left .icon,
-.slide-right .icon {
+.carrousel-prev .icon,
+.carrousel-next .icon {
   position: absolute;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
 }
-.slide-left {
+.carrousel-prev {
   left: 0;
 }
-.slide-right {
+.carrousel-next {
   right: 0;
 }
 
@@ -271,7 +271,7 @@ figcaption.empty {
 #pager-buttons button.pager-active:before {
   background-color: #080;
 }
-.slide-stage-toggle {
+#stage-toggle {
   -webkit-transition: transform 1s;
   -moz-transition: transform 1s;
   -o-transition: transform 1s;
@@ -285,33 +285,33 @@ figcaption.empty {
   z-index: 99;
   display: none;
 }
-.slide-stage-toggle:hover {
+#stage-toggle:hover {
   cursor: pointer;
   color: #fff;
 }
 
 @media screen and (min-height: 480px) {
-  .timeline-slide img {
+  #timeline-slide img {
     height: 120px;
     width: 160px;
   }
   .timeline figure figcaption {
     bottom: 33%;
   }
-  .slide-stage-toggle {
+  #stage-toggle {
     display: block;
   }
-  #timeline-in-focus.t-out {
+  #timeline-stage.t-out {
     position: relative;
     right: -7em;
     top: -1em;
     -webkit-transform: translate(-100%, 50%);
             transform: translate(-100%, 50%);
   }
-  #timeline-in-focus.t-out button {
+  #timeline-stage.t-out button {
     display: none;
   }
-  #timeline-in-focus.t-out .slide-stage-toggle {
+  #timeline-stage.t-out .slide-stage-toggle {
     -webkit-transform: rotate(135deg);
             transform: rotate(135deg);
   }

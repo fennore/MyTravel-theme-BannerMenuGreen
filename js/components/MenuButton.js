@@ -35,6 +35,6 @@ App.Components.MenuButton.prototype.navigate = function(event) {
 }
 
 App.Components.MenuButton.prototype.setCurrent = function() {
-  addClass(this.linkElement, App.cssClasses.mainMenuActive);
+  addClass(this.linkElement, App.cssClasses.menuActive);
   return this;
 };

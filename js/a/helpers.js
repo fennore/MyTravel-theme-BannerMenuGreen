@@ -1,4 +1,8 @@
-// @todo add as DOM element prototype functions
+/**
+ * Remove class to given element
+ * @param {DOMElement} elm
+ * @param {string} cl Class
+ */
 var rmClass = function (elm, cl) {
   if (elm && elm.className) {
     elm.className = elm.className.split(' ').filter(function (val) {
@@ -6,6 +10,11 @@ var rmClass = function (elm, cl) {
     }).join(' ');
   }
 };
+/**
+ * Add class to given element
+ * @param {DOMElement} elm
+ * @param {string} cl Class
+ */
 var addClass = function (elm, cl) {
   if (elm && elm.className) {
     elm.className = elm.className.split(' ').filter(function (val) {
@@ -15,6 +24,11 @@ var addClass = function (elm, cl) {
     elm.className = cl;
   }
 };
+/**
+ * Get the index position of the given element within its parent.
+ * @param {DOMElement} elm
+ * @returns {Number}
+ */
 var getIndex = function (elm) {
   if(!elm.parentNode || !elm.parentNode.children) {
     return 0;
@@ -56,6 +70,15 @@ var getStyle = function (e, styleName) {
   }
   return parseInt(styleValue, 10);
 };
+
+/**
+ * Send an XMLHttpRequest.
+ * @param {String} method Request method (GET, POST, PUT, DELETE).
+ * @param {String} path Path to send the request to.
+ * @param {Object} data The data object to send.
+ * @param {callback} callback Callback to execute on response.
+ * @returns {ActiveXObject|XMLHttpRequest} The Request object.
+ */
 var request = function (method, path, data, callback) {
   if(!method)
     method = 'GET';

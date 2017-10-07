@@ -62,4 +62,3 @@ App.menuMinor = new App.Components.Menu('menu-minor', [
 ]);
 App.Map = new App.Components.MapBackground();
 App.render();
-console.log(App.Events.eventList);

@@ -9,7 +9,11 @@ App.Components.TimelineCarrousel = function() {
 };
 
 App.Components.TimelineCarrousel.prototype.getElement = function() {
-  return this.carrouselElement;
+  if(this.carrouselElement) {
+    return this.carrouselElement.parentNode;
+  } else {
+    return;
+  }
 };
 
 /**
@@ -80,6 +84,13 @@ App.Components.TimelineCarrousel.prototype.doClearTransition = function() {
   return this;
 };
 
+App.Components.TimelineCarrousel.prototype.switchToCarrouselImage = function(event) {
+  var target = event.target;
+  if(target.tagName === 'IMG' && target.parentNode.parentNode === this.carrouselElement) {
+    this.parent.slideToItem(this.parent.init + getIndex(target.parentNode));
+  }
+};
+
 /**
  * 
  * @returns {App.Components.TimelineCarrousel.prototype}
@@ -91,25 +102,57 @@ App.Components.TimelineCarrousel.prototype.render = function() {
     this.carrouselElement = document.getElementById(this.id);
   }
   // Set transformBound
-  this.transformBound = this.carrouselElement.parentNode.offsetWidth;
+  this.transformBound = this.getElement().offsetWidth;
   // Event
-  App.Events.add(new App.Models.Event('resize', window, this.updateTransformBound.bind(this)));
-  App.Events.add(new App.Models.Event('mousemove', this.carrouselElement, this.extend.bind(this)));
-  App.Events.add(new App.Models.Event('transitionend', this.carrouselElement, this.doClearTransition.bind(this)));
+  App.Events
+    .add(new App.Models.Event('resize', window, this.updateTransformBound.bind(this)))
+    .add(new App.Models.Event('mousemove', this.getElement(), this.extend.bind(this)))
+    .add(new App.Models.Event('transitionend', this.carrouselElement, this.doClearTransition.bind(this)));
+  // Carrousel bound event
+  window.removeEventListener('click', this.switchToCarrouselImage.bind(this));
+  window.addEventListener('click', this.switchToCarrouselImage.bind(this));
+  return this;
+};
+    
+/**
+ * @returns {App.Components.TimelineCarrousel}
+ */
+App.Components.TimelineCarrousel.prototype.build = function() {
+  this.carrouselElement.insertAdjacentHTML(
+    'afterbegin',
+    this.parent.dataList.map(App.renderCarrouselItem).join('')
+  );
   return this;
 };
 
 /**
- * 
- * @param {type} timelineList
- * @returns {undefined}
+ * @returns {App.Components.TimelineCarrousel}
  */
 App.Components.TimelineCarrousel.prototype.update = function() {
   this.setFocus();
+  App.Timers.add('carrousel-delayed-show', this.extend.bind(this), 1000);
+  App.Timers.add('carrousel-delayed-hide', this.retract.bind(this), 2000);
+  return this;
+};
+
+App.Components.TimelineCarrousel.prototype.postTransformUpdate = function() {
   this.lazyLoad();
   return this;
 };
 
+
+App.Components.TimelineCarrousel.prototype.prepend = function(items) {
+  this.carrouselElement.insertAdjacentHTML(
+    'afterbegin',
+    items.map(App.renderCarrouselItem).join('')
+  );
+};
+App.Components.TimelineCarrousel.prototype.append = function(items) {
+  this.carrouselElement.insertAdjacentHTML(
+    'beforeend',
+    items.map(App.renderCarrouselItem).join('')
+  );
+};
 /**
  * 
  * @param {type} retract
@@ -130,8 +173,8 @@ App.Components.TimelineCarrousel.prototype.extend = function() {
 App.Components.TimelineCarrousel.prototype.lazyLoad = function() {
   var l = this.parent.dataList.length;
   var buffer = 2;
-  var diffL = this.parent.currentItem - this.parent.movePrev;
-  var diffR = this.parent.moveNext - this.parent.currentItem;
+  var diffL = this.parent.moveRoot - this.parent.movePrev;
+  var diffR = this.parent.moveNext - this.parent.moveRoot;
   var diff = Math.max(diffL, diffR);
   var start = Math.max(this.parent.movePrev - diff - buffer, 0);
   var end = Math.min(this.parent.moveNext + diff + buffer, l - 1);

@@ -27,6 +27,7 @@ App.Components.TimelineStage = function() {
   this.toggle.setParent(this);
   //
   this.classHideStage = 'slide-stage-blur';
+  this.classHideCubes = 'hide';
   // sub elements
   this.imageElement;
   this.captionElement;
@@ -80,7 +81,8 @@ App.Components.TimelineStage.prototype.update = function(item) {
   } else {
     Data.drawCircle.setVisible(false);
   }*/
-  App.Timers.add('stage-delayed-show', this.showDelayed.bind(this), 1000);
+  // Hide
+  this.hide();
   // Scroll to top
   this.stageElement.scrollIntoView({behavior: 'smooth'});
   //
@@ -88,28 +90,33 @@ App.Components.TimelineStage.prototype.update = function(item) {
 };
 
 App.Components.TimelineStage.prototype.hide = function() {
+  // Reset possible conflicting timers
+  App.Timers.reset('stage-hide-mousemove');
+  App.Timers.reset('stage-image');
+  App.Timers.reset('stage-content');
   addClass(this.stageElement, this.classHideStage);
-  rmClass(this.cubesElement, 'hide');
+  rmClass(this.cubesElement, this.classHideCubes);
+  App.Timers.add('stage-delayed-show', this.setDelayed.bind(this), 900);
 };
 
 App.Components.TimelineStage.prototype.show = function() {
+  App.Timers.reset('stage-hide-mousemove');
   rmClass(this.stageElement, this.classHideStage);
-  addClass(this.cubesElement, 'hide');
+  addClass(this.cubesElement, this.classHideCubes);
 };
 
-App.Components.TimelineStage.prototype.showDelayed = function() {
+App.Components.TimelineStage.prototype.setDelayed = function() {
   var item = this.parent.getCurrentItemData();
   App.Timers.reset('stage-hide-mousemove');
-  if(this.parent.carrousel) {
-    this.parent.carrousel.retract();
-  }
   if(App.menuMain) {
     App.menuMain.retract();
   }
   if(App.menuMinor) {
     App.menuMinor.retract();
   }
+  // Update source
   this.imageElement.src = App.basePath + '/img/' + item.path;
+  //
   var txt = '';
   if(item.content) {
     txt = item
@@ -128,14 +135,14 @@ App.Components.TimelineStage.prototype.showDelayed = function() {
 };
 
 App.Components.TimelineStage.prototype.retractNavigation = function() {
-  addClass(this.parent.btnPrev, App.cssClasses.menuRetract);
-  addClass(this.parent.btnNext, App.cssClasses.menuRetract);
+  addClass(this.parent.btnPrev.getElement(), App.cssClasses.menuRetract);
+  addClass(this.parent.btnNext.getElement(), App.cssClasses.menuRetract);
   addClass(this.captionElement, App.cssClasses.menuRetract);
 };
 
 App.Components.TimelineStage.prototype.extendNavigation = function() {
-  rmClass(this.parent.btnPrev, App.cssClasses.menuRetract);
-  rmClass(this.parent.btnNext, App.cssClasses.menuRetract);
+  rmClass(this.parent.btnPrev.getElement(), App.cssClasses.menuRetract);
+  rmClass(this.parent.btnNext.getElement(), App.cssClasses.menuRetract);
   rmClass(this.captionElement, App.cssClasses.menuRetract);
 };
 
@@ -143,7 +150,8 @@ App.Components.TimelineStage.prototype.extendNavigation = function() {
  * Use traditional addEventListener on image load for this callback
  */
 App.Components.TimelineStage.prototype.onStageLoad = function() {
-  App.Timers.add('stage-image', this.show.bind(this), 600);
+  App.Timers.reset('stage-hide-mousemove');
+  App.Timers.add('stage-image', this.show.bind(this), 1000);
   var delay = 2000 + this.captionElement.textContent.length * 36;
   App.Timers.add('stage-content', this.retractNavigation.bind(this), delay);
 };

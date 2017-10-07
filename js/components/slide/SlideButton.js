@@ -9,10 +9,10 @@ App.Components.SlideButton = function(buttonInfo) {
   var svgClassSuffix = buttonInfo.direction === 'prev'?'left':'right';
   var title = buttonInfo.direction === 'prev'?'Previous':'Next';
   this.btnClass = 
-          (buttonInfo.type === 'slide'?'slide':'stage') + '-' +
+          (buttonInfo.type === 'carrousel'?'carrousel':'stage') + '-' +
           (buttonInfo.direction === 'prev'?'prev':'next');
-  if(this.parent.stageElement) {
-    this.buttonElement = this.parent.stageElement.querySelector('button.' + this.btnClass);
+  if(this.parent.getElement()) {
+    this.buttonElement = this.parent.getElement().querySelector('button.' + this.btnClass);
   }
   this.template = 
     '<button class="' + this.btnClass + '" disabled="disabled" type="button">' +

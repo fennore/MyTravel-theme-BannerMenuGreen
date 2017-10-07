@@ -37,11 +37,18 @@ App.Components.StorySlide = function() {
 App.Components.StorySlide.prototype.render = function() {
   // Render
   this.slide.render();
+  var kpNextEvent = new App.Models.Event('keypress', null, this.switchStory.bind(this), 39);
+  var kpPrevEvent = new App.Models.Event('keypress', null, this.switchStory.bind(this), 37);
+  // Remove keypress events
+  App.Events
+    .remove(kpNextEvent)
+    .remove(kpPrevEvent);
   // Add button events
-  App.Events.add(new App.Models.Event('click', this.slide.btnNext.buttonElement, this.switchStory.bind(this)));
-  App.Events.add(new App.Models.Event('keypress', null, this.switchStory.bind(this), 39));
-  App.Events.add(new App.Models.Event('click', this.slide.btnPrev.buttonElement, this.switchStory.bind(this)));
-  App.Events.add(new App.Models.Event('keypress', null, this.switchStory.bind(this), 37));
+  App.Events
+    .add(new App.Models.Event('click', this.slide.btnNext.getElement(), this.switchStory.bind(this)))
+    .add(new App.Models.Event('click', this.slide.btnPrev.getElement(), this.switchStory.bind(this)))
+    .add(kpNextEvent)
+    .add(kpPrevEvent);
 };
 
 App.Components.StorySlide.prototype.build = function(stories) {

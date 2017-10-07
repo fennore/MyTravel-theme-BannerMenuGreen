@@ -72,18 +72,18 @@ App.Events.add = function(event) {
  * @param {callback} cb
  * @returns {App.Events}
  */
-App.Events.remove = function(type, element, cb) {
-  if(!this.eventList[type]) {
+App.Events.remove = function(event) {
+  if(!this.eventList[event.type]) {
     return this;
   }
-  for(var k in this.eventList[type]){
-    var event = this.eventList[type][k];
-    if(event.element === element && event.cb === cb) {
-      this.eventList[type].splice(k, 1);
+  for(var k in this.eventList[event.type]){
+    var oldEvent = this.eventList[event.type][k];
+    if(oldEvent.element === event.element && oldEvent.code === event.code) {
+      this.eventList[event.type].splice(k, 1);
     }
   }
-  if(this.eventList[type].length === 0) {
-    this.removeListener(type);
+  if(this.eventList[event.type].length === 0) {
+    this.removeListener(event.type);
   }
   return this;
 };

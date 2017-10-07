@@ -41,15 +41,22 @@ App.Components.TimelineSlide = function() {
 App.Components.TimelineSlide.prototype.render = function() {
   // Render
   this.slide.render();
+  // Remove possible events
+  var kpNextEvent = new App.Models.Event('keypress', null, this.switchItem.bind(this), 39);
+  var kpPrevEvent = new App.Models.Event('keypress', null, this.switchItem.bind(this), 37);
+  App.Events
+    .remove(kpNextEvent)
+    .remove(kpPrevEvent);
   // Add button events
-  App.Events.add(new App.Models.Event('click', this.slide.btnSlideNext.buttonElement, this.switchItem.bind(this)));
-  App.Events.add(new App.Models.Event('click', this.slide.btnSlidePrev.buttonElement, this.switchItem.bind(this)));
-  App.Events.add(new App.Models.Event('click', this.slide.btnNext.buttonElement, this.switchItem.bind(this)));
-  App.Events.add(new App.Models.Event('keypress', null, this.switchItem.bind(this), 39));
-  App.Events.add(new App.Models.Event('click', this.slide.btnPrev.buttonElement, this.switchItem.bind(this)));
-  App.Events.add(new App.Models.Event('keypress', null, this.switchItem.bind(this), 37));
-  App.Events.add(new App.Models.Event('mousemove', App.menuMain, this.doMenuExtends.bind(this)));
-  App.Events.add(new App.Models.Event('mousemove', App.menuMinor, this.doMenuExtends.bind(this)));
+  App.Events
+    .add(new App.Models.Event('click', this.slide.btnSlideNext.getElement(), this.switchItem.bind(this)))
+    .add(new App.Models.Event('click', this.slide.btnSlidePrev.getElement(), this.switchItem.bind(this)))
+    .add(new App.Models.Event('click', this.slide.btnNext.getElement(), this.switchItem.bind(this)))
+    .add(new App.Models.Event('click', this.slide.btnPrev.getElement(), this.switchItem.bind(this)))
+    .add(kpNextEvent)
+    .add(kpPrevEvent)
+    .add(new App.Models.Event('mousemove', App.menuMain.getElement(), this.doMenuExtends.bind(this)))
+    .add(new App.Models.Event('mousemove', App.menuMinor.getElement(), this.doMenuExtends.bind(this)));
   // Add global mousemove event, make sure it only exists once.
   window.removeEventListener('mousemove', this.onMouseMove.bind(this), true);
   window.addEventListener('mousemove', this.onMouseMove.bind(this), true);
@@ -71,6 +78,7 @@ App.Components.TimelineSlide.prototype.build = function(items) {
   this.slide.isLoading = false;
   this.slide
     .build(itemList);
+  return this;
 };
 
 App.Components.TimelineSlide.prototype.prepend = function(items) {
@@ -78,12 +86,14 @@ App.Components.TimelineSlide.prototype.prepend = function(items) {
   var itemList = items.list.map(App.Models.createTimelineItem);
   this.slide
     .prepend(itemList);
+  return this;
 };
 App.Components.TimelineSlide.prototype.append = function(items) {
   // Convert to Story objects
   var itemList = items.list.map(App.Models.createTimelineItem);
   this.slide
     .append(itemList);
+  return this;
 };
 
 /**
@@ -174,7 +184,8 @@ App.Components.TimelineSlide.prototype.doExtends = function () {
 App.Components.TimelineSlide.prototype.doMenuExtends = function () {
   App.menuMain.extend();
   App.menuMinor.extend();
-}
+  return this;
+};
 
 App.Components.TimelineSlide.prototype.doRetracts = function () {
   this.slide.stage.retractNavigation();

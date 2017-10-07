@@ -38,11 +38,11 @@ App.Actions.Page = {
       App.menuMain.retract();
       App.menuMinor.retract();
     }
-    App.page.menuLink.setCurrent();
     this.setWrapClass(App.page.wrapClass);
     document.title = App.page.title;
     // Render page
     App.page.render();
+    App.page.menuLink.setCurrent();
     // Post render
     if(App.page.postRender) {
       App.page.postRender();

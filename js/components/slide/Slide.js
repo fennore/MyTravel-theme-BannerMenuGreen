@@ -85,8 +85,7 @@ App.Components.Slide.prototype.render = function() {
 App.Components.Slide.prototype.setInitialPositions = function() {
   var stored = parseInt(localStorage.getItem(this.storageKey)) || 0;
   this.init = Math.max(Math.floor(stored/this.sizeRequest) - 1, 0)*this.sizeRequest;
-  this.currentItem = stored - this.init;
-  console.log(stored, this.init, this.currentItem);
+  this.currentItem = this.moveRoot = this.moveNext = stored - this.init;
   return this;
 };
 
@@ -113,7 +112,8 @@ App.Components.Slide.prototype.findItemSlideNext = function(key) {
   if(!this.dataList[key] || !this.dataList[key + 1] || !this.carrousel) {
     // return current active item
     // because we don't have to move for already visible items
-    return this.moveNext || 0;
+    this.moveNext = this.moveRoot;
+    return this.moveNext;
   }
   var elm = this.carrousel.carrouselElement.children[++key];
   // check if the right side of the element is outside of the parent wrapper
@@ -121,7 +121,7 @@ App.Components.Slide.prototype.findItemSlideNext = function(key) {
 
   if(elm && transformCheckNext) {
     this.moveNext = key;
-    return key;
+    return this.moveNext;
   } else if(elm) {
     return this.findItemSlideNext(key);
   }
@@ -149,7 +149,7 @@ App.Components.Slide.prototype.findItemSlidePrev = function(key) {
   var transformCheckPrev = this.carrousel.transformCheckPrev(elm);
   if(elm && transformCheckPrev) {
     this.movePrev = key;
-    return key;
+    return this.movePrev;
   } else if(elm) {
     return this.findItemSlidePrev(--key);
   }
@@ -224,7 +224,7 @@ App.Components.Slide.prototype.slideToItem = function(offset) {
 
 /**
  * Builds the slide with given items
- * @returns {undefined}
+ * @returns {App.Components.Slide}
  */
 App.Components.Slide.prototype.build = function(items) {
   if(!items) {
@@ -233,10 +233,7 @@ App.Components.Slide.prototype.build = function(items) {
   this.dataList = items;
   // Render Carrousel
   if(this.carrousel) {
-    this.carrousel.getElement().insertAdjacentHTML(
-      'afterbegin',
-      items.map(App.renderCarrouselItem).join('')
-    );
+    this.carrousel.build();
   }
   this.updateSlide();
   return this;
@@ -251,10 +248,7 @@ App.Components.Slide.prototype.prepend = function(items) {
   Array.prototype.unshift.apply(this.dataList, items);
   // Render Carrousel
   if(this.carrousel) {
-    this.carrousel.getElement().insertAdjacentHTML(
-      'afterbegin',
-      items.map(App.renderCarrouselItem).join('')
-    );
+    this.carrousel.prepend(items);
   }
   this.rightTrim();
   this.isLoading = false;
@@ -271,10 +265,7 @@ App.Components.Slide.prototype.append = function(items) {
   Array.prototype.push.apply(this.dataList, items);
   // Render Carrousel
   if(this.carrousel) {
-    this.carrousel.getElement().insertAdjacentHTML(
-      'beforeend',
-      items.map(App.renderCarrouselItem).join('')
-    );
+    this.carrousel.append(items);
   }
   this.leftTrim();
   this.isLoading = false;
@@ -321,15 +312,17 @@ App.Components.Slide.prototype.updateSlide = function() {
   if(this.isLoading) {
     return this;
   }
-  // Update moveNext and movePrev
-  this.findItemSlidePrev();
-  this.findItemSlideNext();
   // show stage
   this.show();
   // slide the carrousel
   this.updateCarrousel();
+  // Update moveNext and movePrev
+  this.findItemSlidePrev();
+  this.findItemSlideNext();
+  //
+  this.postTransformUpdate();
   // update pager
-  this.updatePager()
+  this.updatePager();
   // update slide nav
   this.updateSlideNav();
   // Enable buttons
@@ -375,8 +368,10 @@ App.Components.Slide.prototype.updateCarrousel = function() {
   var checkBefore = this.moveRoot > this.currentItem;
   var checkAfter = this.currentItem >= this.moveNext;
   // Set new move root
-  if(checkBefore || checkAfter) {
-    this.moveRoot = this.currentItem;
+  if(checkBefore) {
+    this.moveRoot = this.movePrev;
+  } else if(checkAfter) {
+    this.moveRoot = this.moveNext;
   } else {
     return this;
   }
@@ -390,6 +385,12 @@ App.Components.Slide.prototype.updateCarrousel = function() {
   this.carrousel.carrouselElement.style.OTransform = tf;
   this.carrousel.carrouselElement.style.transform = tf;
   return this;
+};
+
+App.Components.Slide.prototype.postTransformUpdate = function() {
+  if(this.carrousel && this.carrousel.postTransformUpdate) {
+    this.carrousel.postTransformUpdate();
+  }
 };
 
 /**
@@ -448,7 +449,7 @@ App.Components.Slide.prototype.enableButtons = function() {
   if(this.btnSlideNext && this.moveNext > this.moveRoot) {
     this.btnSlideNext.enable();
   }
-  if(this.btnSlidePrev && this.movePrev > this.findItemSlidePrev()) {
+  if(this.btnSlidePrev && this.movePrev < this.moveRoot) {
     this.btnSlidePrev.enable();
   }
   return this;

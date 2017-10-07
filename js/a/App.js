@@ -24,7 +24,7 @@ App = {
   GmapStyle : function() {},
   // Some css class collection
   cssClasses : {
-    mainMenuActive: 'current',
+    menuActive: 'current',
     menuRetract: 'retract',
     loading: 'loading',
     focus: 'focus',

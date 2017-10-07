@@ -48,18 +48,18 @@
   width: 1.4em;
   height: 2em;
 }
-.story button.prev {
+.story button.stage-prev {
   left: 0;
 }
-.story button.prev .icon {
+.story button.stage-prev .icon {
   left: 0;
 }
-.story button.next {
+.story button.stage-next {
   right: 0;
   width: 2.4em;
   border-left: 1px solid #ddd;
 }
-.story button.next .icon {
+.story button.stage-next .icon {
   right: 0;
 }
 
@@ -70,7 +70,7 @@
   #storystage article .written {
     padding: 1em 8em 1em 2em;
   }
-  .story button.next {
+  .story button.stage-next {
     width: 7.4em;
   }
   #storystage article footer {
