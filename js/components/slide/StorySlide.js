@@ -151,6 +151,6 @@ App.Components.StorySlide.prototype.switchStory = function (event) {
   }
   
   // Update slide state
-  this.slide.slideToItem(newAbsolutePosition);
+  this.slide.switchToItem(newAbsolutePosition);
   return this;
 };

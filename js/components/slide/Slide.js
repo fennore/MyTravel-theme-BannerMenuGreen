@@ -185,7 +185,7 @@ App.Components.Slide.prototype.getCurrentItemData = function() {
  * @param {int} offset Absolute position of requested item.
  * @returns {undefined}
  */
-App.Components.Slide.prototype.slideToItem = function(offset) {
+App.Components.Slide.prototype.switchToItem = function(offset) {
   if (!this.carrousel && !this.stage) {
     return this;
   }
@@ -365,15 +365,15 @@ App.Components.Slide.prototype.updateCarrousel = function() {
   // Set focus
   addClass(this.carrousel.getFocusElement(), App.cssClasses.focus);
   // Only slide if currentItem is out of visible scope
-  var checkBefore = this.moveRoot > this.currentItem;
-  var checkAfter = this.currentItem >= this.moveNext;
+  var checkBefore = this.moveRoot > this.currentItem && this.currentItem >= this.movePrev;
+  var checkAfter = this.currentItem >= this.moveNext && this.currentItem <= this.moveNext*2 - this.moveRoot - 1;
   // Set new move root
   if(checkBefore) {
     this.moveRoot = this.movePrev;
   } else if(checkAfter) {
     this.moveRoot = this.moveNext;
-  } else {
-    return this;
+  } else if(this.currentItem < this.movePrev || this.currentItem > this.moveNext*2 - this.moveRoot - 1) {
+    this.moveRoot = this.currentItem;
   }
   // Find new offset
   this.transformValue = this.carrousel.getTransformValue();

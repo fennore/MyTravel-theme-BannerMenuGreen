@@ -6,8 +6,17 @@ App.Components.TimelineCarrousel = function() {
   this.template = '<div class="timeline-slide-wrapper"><div id="' + this.id + '" class="no-smooth"></div></div>';
   this.transformType = 'translateX';
   this.transformBound = null;
+  this.total = new App.Components.TimelineCarrouselTotal();
+  this.jump = new App.Components.TimelineCarrouselJump();
+  this.total.setParent(this);
+  this.jump.setParent(this);
 };
 
+/**
+ * Get the root DOM element for this component.
+ * This could be a parent wrapper or the carrousel itself.
+ * @returns {DOMElement|undefined}
+ */
 App.Components.TimelineCarrousel.prototype.getElement = function() {
   if(this.carrouselElement) {
     return this.carrouselElement.parentNode;
@@ -26,39 +35,47 @@ App.Components.TimelineCarrousel.prototype.setParent = function(parent) {
   return this;
 };
 
+/**
+ * Get the DOM element of the currently focused item.
+ * @returns {DOMElement}
+ */
 App.Components.TimelineCarrousel.prototype.getFocusElement = function() {
   return this.focusElement;
 };
 
 /**
- * 
+ * Set the carrousel view boundary.
+ * Usually used as callback for window resize event.
  */
 App.Components.TimelineCarrousel.prototype.updateTransformBound = function() {
   App.Timers.add('slidewidthonresize', (function() {
-    this.transformBound = this.carrouselElement.parentNode.offsetWidth;
+    this.transformBound = this.getElement().offsetWidth;
   }).bind(this), 150);
+  return this;
 };
 
 /**
- * 
- * @returns {App.Components.TimelineCarrousel.prototype.carrouselElement.children.offsetLeft}
+ * Carrousel transform value.
+ * @returns {Number}
  */
 App.Components.TimelineCarrousel.prototype.getTransformValue = function() {
   return this.carrouselElement.children[this.parent.moveRoot].offsetLeft;
 };
 
 /**
- * 
- * @param {type} elm
- * @returns {Number}
+ * Find the next transform root element.
+ * This is the first element that is not completely visible on the forward side.
+ * @param {DOMElement} elm
+ * @returns {Boolean}
  */
 App.Components.TimelineCarrousel.prototype.transformCheckNext = function(elm) {
   return elm.offsetLeft - this.parent.transformValue + elm.offsetWidth > this.transformBound;
 };
 
 /**
- * 
- * @param {type} elm
+ * Find the previous transform root element.
+ * This is the last element that would be completely visible on the backward side.
+ * @param {DOMElement} elm
  * @returns {Boolean}
  */
 App.Components.TimelineCarrousel.prototype.transformCheckPrev = function(elm) {
@@ -76,7 +93,7 @@ App.Components.TimelineCarrousel.prototype.setFocus = function() {
 };
 
 /**
- * 
+ * Update the carrousel to update without smooth animation.
  * @returns {App.Components.TimelineCarrousel}
  */
 App.Components.TimelineCarrousel.prototype.doClearTransition = function() {
@@ -84,16 +101,21 @@ App.Components.TimelineCarrousel.prototype.doClearTransition = function() {
   return this;
 };
 
-App.Components.TimelineCarrousel.prototype.switchToCarrouselImage = function(event) {
+/**
+ * Event handler for clicked visible carrousel image.
+ * @param {Event} event
+ */
+App.Components.TimelineCarrousel.prototype.switchToItem = function(event) {
   var target = event.target;
   if(target.tagName === 'IMG' && target.parentNode.parentNode === this.carrouselElement) {
-    this.parent.slideToItem(this.parent.init + getIndex(target.parentNode));
+    this.parent.switchToItem(this.parent.init + getIndex(target.parentNode));
   }
 };
 
 /**
- * 
- * @returns {App.Components.TimelineCarrousel.prototype}
+ * Render the carrousel.
+ * This adds it to the DOM, creates references to DOM Elements and attaches events.
+ * @returns {App.Components.TimelineCarrousel}
  */
 App.Components.TimelineCarrousel.prototype.render = function() {
   if(!this.carrouselElement || !document.body.contains(this.carrouselElement)) {
@@ -101,6 +123,10 @@ App.Components.TimelineCarrousel.prototype.render = function() {
     App.page.getElement().insertAdjacentHTML('afterbegin', this.template);
     this.carrouselElement = document.getElementById(this.id);
   }
+  // Set jump
+  this.jump.render();
+  // Prepend total
+  this.total.render();
   // Set transformBound
   this.transformBound = this.getElement().offsetWidth;
   // Event
@@ -109,12 +135,13 @@ App.Components.TimelineCarrousel.prototype.render = function() {
     .add(new App.Models.Event('mousemove', this.getElement(), this.extend.bind(this)))
     .add(new App.Models.Event('transitionend', this.carrouselElement, this.doClearTransition.bind(this)));
   // Carrousel bound event
-  window.removeEventListener('click', this.switchToCarrouselImage.bind(this));
-  window.addEventListener('click', this.switchToCarrouselImage.bind(this));
+  window.removeEventListener('click', this.switchToItem.bind(this));
+  window.addEventListener('click', this.switchToItem.bind(this));
   return this;
 };
     
 /**
+ * Build the carrousel content.
  * @returns {App.Components.TimelineCarrousel}
  */
 App.Components.TimelineCarrousel.prototype.build = function() {
@@ -122,53 +149,74 @@ App.Components.TimelineCarrousel.prototype.build = function() {
     'afterbegin',
     this.parent.dataList.map(App.renderCarrouselItem).join('')
   );
+  this.total.build();
   return this;
 };
 
 /**
+ * Update the carrousel to the new focused Item.
  * @returns {App.Components.TimelineCarrousel}
  */
 App.Components.TimelineCarrousel.prototype.update = function() {
   this.setFocus();
+  this.total.update();
   App.Timers.add('carrousel-delayed-show', this.extend.bind(this), 1000);
   App.Timers.add('carrousel-delayed-hide', this.retract.bind(this), 2000);
   return this;
 };
 
+/**
+ * Do whatever needs to be done after update.
+ * @returns {App.Components.TimelineCarrousel}
+ */
 App.Components.TimelineCarrousel.prototype.postTransformUpdate = function() {
   this.lazyLoad();
   return this;
 };
 
-
+/**
+ * Prepend items as DOM elements to the carrousel.
+ * @param {array} items
+ */
 App.Components.TimelineCarrousel.prototype.prepend = function(items) {
   this.carrouselElement.insertAdjacentHTML(
     'afterbegin',
     items.map(App.renderCarrouselItem).join('')
   );
+  return this
 };
+
+/**
+ * Append items as DOM elements to the carrousel.
+ * @param {array} items
+ */
 App.Components.TimelineCarrousel.prototype.append = function(items) {
   this.carrouselElement.insertAdjacentHTML(
     'beforeend',
     items.map(App.renderCarrouselItem).join('')
   );
+  return this;
 };
+
 /**
- * 
- * @param {type} retract
- * @returns {undefined}
+ * Retract the carrousel (hide)
  */
 App.Components.TimelineCarrousel.prototype.retract = function() {
-  addClass(this.carrouselElement.parentNode, App.cssClasses.menuRetract);
-};
-
-App.Components.TimelineCarrousel.prototype.extend = function() {
-  rmClass(this.carrouselElement.parentNode, App.cssClasses.menuRetract);
+  addClass(this.getElement(), App.cssClasses.menuRetract);
+  return this;
 };
 
 /**
- * 
- * @returns {undefined}
+ * Extends the carrousel (show)
+ */
+App.Components.TimelineCarrousel.prototype.extend = function() {
+  rmClass(this.getElement(), App.cssClasses.menuRetract);
+  return this;
+};
+
+/**
+ * Lazyload the thumbnail images in the carrousel.
+ * @returns {App.Components.TimelineCarrousel}
  */
 App.Components.TimelineCarrousel.prototype.lazyLoad = function() {
   var l = this.parent.dataList.length;

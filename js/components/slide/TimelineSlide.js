@@ -12,6 +12,7 @@ App.Components.TimelineSlide = function() {
     sizeRequest: 35,
     stage: timelineStage,
     carrousel: timelineCarrousel,
+    pager: timelinePager,
     storageKey: storageKey,
     // btns
     btnNext: new App.Components.SlideButton({
@@ -163,8 +164,8 @@ App.Components.TimelineSlide.prototype.switchItem = function (event) {
     cbAddSlideItems(this, reqStart, reqCount);
   }
   
-  // Update slide state
-  this.slide.slideToItem(newAbsolutePosition);
+  // Update currentItem state
+  this.slide.switchToItem(newAbsolutePosition);
   return this;
 };
 

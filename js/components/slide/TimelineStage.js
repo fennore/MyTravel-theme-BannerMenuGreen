@@ -1,7 +1,7 @@
 App.Components.TimelineStage = function() {
   this.id = 'timeline-stage';
   this.stageElement = document.getElementById(this.id);
-  this.template = '<figure id="' + this.id + '"><h1>Timeline</h1><img class="tl-img" /><figcaption class="written"></figcaption></figure>';
+  this.template = '<figure id="' + this.id + '"><h1>Timeline</h1><img class="tl-img" /><figcaption class="written empty"></figcaption></figure>';
   this.parent;
   // Load cubes
   this.cubesTemplate = '<div class="sk-cube-grid">' +
@@ -49,7 +49,7 @@ App.Components.TimelineStage.prototype.setParent = function(parent) {
 
 App.Components.TimelineStage.prototype.render = function() {
   if(!this.stageElement || !document.body.contains(this.stageElement)) {
-    App.page.pageElement.insertAdjacentHTML('afterbegin', this.template);
+    App.page.getElement().insertAdjacentHTML('afterbegin', this.template);
     this.stageElement = document.getElementById(this.id);
   }
   this.toggle.render();

@@ -1,6 +1,9 @@
+/**
+ * @returns {App.Components.TimelinePager}
+ */
 App.Components.TimelinePager = function() {
   this.id = 'pager-buttons';
-  this.pagerElement;
+  this.pagerElement = document.getElementById(this.id);
   this.template = '<div id="' + this.id + '"></div>';
   this.templateButton = '<button></button>';
   this.parent;
@@ -8,16 +11,43 @@ App.Components.TimelinePager = function() {
   this.pagerCurrent = 0;
 };
 
+/**
+ * The component root DOM element
+ * @returns {DOMElement}
+ */
 App.Components.TimelinePager.prototype.getElement = function() {
   return this.pagerElement;
 };
 
+/**
+ * Set parent Component, usually this should be a Slide Component
+ * @param {App.Components.Slide} parent
+ * @returns {App.Components.TimelinePager}
+ */
 App.Components.TimelinePager.prototype.setParent = function(parent) {
   this.parent = parent;
+  return this;
+};
+
+/**
+ * Event handler for clicked pager button.
+ * @param {Event} event
+ */
+App.Components.TimelinePager.prototype.switchToItem = function(event) {
+  var target = event.target;
+  if(target.tagName === 'BUTTON' && target.parentNode.id === this.id) {
+    this.parent.switchToItem(this.parent.moveRoot + getIndex(target));
+  }
 };
 
 App.Components.TimelinePager.prototype.render = function() {
-  
+  if(!this.pagerElement || !document.body.contains(this.pagerElement)) {
+    App.page.getElement().insertAdjacentHTML('beforeend', this.template);
+    this.pagerElement = document.getElementById(this.id);
+  }
+  // Pager bound event
+  window.removeEventListener('click', this.switchToItem.bind(this));
+  window.addEventListener('click', this.switchToItem.bind(this));
 };
 
 App.Components.TimelinePager.prototype.update = function() {
