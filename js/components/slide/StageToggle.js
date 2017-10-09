@@ -11,7 +11,7 @@ App.Components.StageToggle.prototype.render = function() {
   }
   // Events
   App.Events.add(new App.Models.Event('click', this.toggleElement, this.doToggle.bind(this)));
-  // @todo Maybe add buttonup event
+  // @todo Maybe add mouseup event
   return this;
 };
 /**
@@ -25,11 +25,11 @@ App.Components.StageToggle.prototype.setParent = function(parent) {
 }
 
 App.Components.StageToggle.prototype.doToggle = function() {
-  if(this.toggleElement.className && this.toggleElement.className.indexOf(App.cssClasses.toggleOut) > -1) {
-    rmClass(this.toggleElement, App.cssClasses.toggleOut);
+  if(this.parent.getElement().className && this.parent.getElement().className.indexOf(App.cssClasses.toggleOut) > -1) {
+    rmClass(this.parent.getElement(), App.cssClasses.toggleOut);
     App.Map.disableNavigation();
   } else {
-    addClass(this.toggleElement, App.cssClasses.toggleOut);
+    addClass(this.parent.getElement(), App.cssClasses.toggleOut);
     App.Map.enableNavigation();
   }
 };

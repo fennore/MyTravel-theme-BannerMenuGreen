@@ -53,7 +53,7 @@
     {% block footer %}
     <!-- script tags can go here @todo modernize and split bundle into async and defer -->
     <div id="script-wrapper">
-    <!--<script src="https://maps.googleapis.com/maps/api/js?key={{apikey}}&libraries=geometry"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{directionsdriveraccesskey}}&libraries=geometry"></script>
     <!-- Velocity... once upon a time <script src="js/lib/velocity.min.js"></script>-->
     <!-- Core JS file -->
     <!--<script src="{{basepath}}/views/default/js/lib/smoothscroll.js"></script>-->

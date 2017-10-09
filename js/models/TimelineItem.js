@@ -8,6 +8,8 @@ App.Models.TimelineItem = function (data) {
   this.path = data.path;
   this.content = data.content;
   this.thumbnail = data.setting.thumbnail; // data.link
+  this.location = data.setting.location;
+  this.storylink;
 };
 
 App.Models.createTimelineItem = function (data) {

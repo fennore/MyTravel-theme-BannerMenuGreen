@@ -72,15 +72,16 @@ App.Components.TimelineStage.prototype.update = function(item) {
   // Update existing html
   this.titleElement.textContent = item.title;
   // Set story link
-  /*if(StoryAction.setLink) {
-    StoryAction.setLink(img);
-  }
-  if(img.lat && img.lng) {
-    var LatLng = new google.maps.LatLng(parseFloat(img.lat), parseFloat(img.lng));
-    MapAction.drawLocationArea(LatLng);
+  this.setStoryLink();
+  // Change location
+  if(item.location) {
+    var LatLng = new google.maps.LatLng(parseFloat(item.location.lat), parseFloat(item.location.lng));
+    App.Map.updateMarkedLocation(LatLng);
   } else {
-    Data.drawCircle.setVisible(false);
-  }*/
+    App.Map.hideMarkedLocation();
+  }
+  // Preload images
+  this.imagePreload();
   // Hide
   this.hide();
   // Scroll to top
@@ -146,6 +147,17 @@ App.Components.TimelineStage.prototype.extendNavigation = function() {
   rmClass(this.captionElement, App.cssClasses.menuRetract);
 };
 
+App.Components.TimelineStage.prototype.imagePreload = function() {
+  if(this.parent.currentItem < this.parent.total - 1) {
+    var preloadNext = new Image();
+    preloadNext.src = App.basePath + '/img/' + this.parent.dataList[this.parent.currentItem + 1].path;
+  }
+  if(this.parent.currentItem > 0) {
+    var preloadPrev = new Image();
+    preloadPrev.src = App.basePath + '/img/' + this.parent.dataList[this.parent.currentItem - 1].path;
+  }
+};
+
 /**
  * Use traditional addEventListener on image load for this callback
  */
@@ -154,4 +166,32 @@ App.Components.TimelineStage.prototype.onStageLoad = function() {
   App.Timers.add('stage-image', this.show.bind(this), 1000);
   var delay = 2000 + this.captionElement.textContent.length * 36;
   App.Timers.add('stage-content', this.retractNavigation.bind(this), delay);
+};
+
+/**
+ * 
+ */
+App.Components.TimelineStage.prototype.setStoryLink = function() {
+  var mnuItem = App.menuMain.getElement().children[0];
+  var item = this.parent.getCurrentItemData();/*
+  if(item.link) {
+    var story = Data.slideLinkedStoryList[img.storyid];
+    addClass(mnuItem, 'is-linked');
+    var stoTitle = story.title;
+    // update title
+    mnuItem
+      .querySelector('svg')
+      .nextSibling
+      .nodeValue = stoTitle;
+    mnuItem.title = stoTitle;
+    mnuItem.href = Data.basePath + '/story/' + story.path;
+  } else {
+    rmClass(mnuItem, 'is-linked');
+    mnuItem
+      .querySelector('svg')
+      .nextSibling
+      .nodeValue = 'Writings';
+    mnuItem.title = 'Writings';
+    mnuItem.href = Data.basePath + '/story';
+  }*/
 };
