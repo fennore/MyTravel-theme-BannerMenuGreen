@@ -302,17 +302,17 @@ figcaption.empty {
   #stage-toggle {
     display: block;
   }
-  #timeline-stage.t-out {
+  #timeline-stage.toggle-out {
     position: relative;
     right: -7em;
     top: -1em;
     -webkit-transform: translate(-100%, 50%);
             transform: translate(-100%, 50%);
   }
-  #timeline-stage.t-out button {
+  #timeline-stage.toggle-out button {
     display: none;
   }
-  #timeline-stage.t-out .slide-stage-toggle {
+  #timeline-stage.toggle-out #stage-toggle {
     -webkit-transform: rotate(135deg);
             transform: rotate(135deg);
   }

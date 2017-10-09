@@ -6,6 +6,12 @@ App.Components.MapBackground = function() {
   this.mapElement = document.getElementById('map');
   this.template = '<div id="mapWrapper"><div id="map"></div></div>';
   this.googleMap;
+  this.locationMarker;
+  this.mapZoom = {
+    default: 7,
+    location: 15,
+    overview: 4
+  };
 };
 
 App.Components.MapBackground.prototype.render = function() {
@@ -13,8 +19,7 @@ App.Components.MapBackground.prototype.render = function() {
     App.scripts.insertAdjacentHTML('beforebegin', this.template);
     this.mapElement = document.getElementById('map');
   }
-  return this;
-  // Later
+  // Set google map
   this.googleMap = new google.maps.Map(this.mapElement, {
     center: App.Settings.DefaultLocation,
     scrollwheel: false,
@@ -39,6 +44,19 @@ App.Components.MapBackground.prototype.render = function() {
       position: google.maps.ControlPosition.RIGHT_TOP
     },
     fullscreenControl: false
+  });
+  // Set location marker
+  this.locationMarker = new google.maps.Circle({
+    map: this.googleMap,
+    radius: 5000,
+    fillColor: 'red',
+    fillOpacity: 0.6,
+    strokeColor: 'red',
+    strokeOpacity: 1,
+    strokeWeight: 3,
+    draggable: false, // Dragable
+    editable: false, // Resizable
+    visible: false // Visible
   });
   return this;
 };
@@ -84,4 +102,16 @@ App.Components.MapBackground.prototype.drawEncodedRoute = function(stages) {
       polyLine.setMap(this.googleMap);
     }
   }
+};
+
+App.Components.MapBackground.prototype.updateMarkedLocation = function(LatLng) {
+  //var LatLng = new google.maps.LatLng(parseFloat(img.lat), parseFloat(img.lng));
+  this.markedLocation.setCenter(LatLng);
+  this.markedLocation.setVisible(true);
+  this.googleMap.setZoom(this.mapZoom.default);
+  this.googleMap.panTo(LatLng);
+};
+
+App.Components.MapBackground.prototype.hideMarkedLocation = function() {
+  this.locationMarker.setVisible(false);
 };
