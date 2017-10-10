@@ -199,6 +199,20 @@ App.Components.TimelineCarrousel.prototype.append = function(items) {
 };
 
 /**
+ * Trim items in carrousel
+ * @param {Number} offset
+ * @param {Number} diff
+ * @returns {App.Components.TimelineCarrousel}
+ */
+App.Components.TimelineCarrousel.prototype.trim = function(offset, diff) {
+  console.log('trim from ', offset, diff);
+  for(var i = 0; i < diff && this.carrouselElement.children[offset]; ++i) {
+    this.carrouselElement.removeChild(this.carrouselElement.children[offset]);
+  }
+  return this;
+};
+
+/**
  * Retract the carrousel (hide)
  */
 App.Components.TimelineCarrousel.prototype.retract = function() {

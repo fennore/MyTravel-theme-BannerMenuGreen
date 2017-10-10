@@ -279,13 +279,17 @@ App.Components.Slide.prototype.append = function(items) {
  */
 App.Components.Slide.prototype.leftTrim = function() {
   var diff = this.dataList.length - this.sizeSlide;
+  var offset = 0;
   if(diff > 0) {
     // Update state for trim on the left
     this.updateState(-diff);
     // Trim
-    this.dataList.splice(0, diff);
+    this.dataList.splice(offset, diff);
+    // Trim carrousel
+    if(this.carrousel) {
+      this.carrousel.trim(offset, diff);
+    }
   }
-  // Trim carrousel
   
   return this;
 };
@@ -295,11 +299,15 @@ App.Components.Slide.prototype.leftTrim = function() {
  */
 App.Components.Slide.prototype.rightTrim = function() {
   var diff = this.dataList.length - this.sizeSlide;
+  var offset = this.sizeSlide;
   if(diff > 0) {
     // Trim 
-    this.dataList.splice(this.sizeSlide, diff);
+    this.dataList.splice(offset, diff);
+    // Trim carrousel
+    if(this.carrousel) {
+      this.carrousel.trim(offset, diff);
+    }
   }
-  // Trim carrousel
   
   return this;
 };
