@@ -203,6 +203,11 @@ App.Components.Slide.prototype.switchToItem = function(offset) {
   // Remove element in dataList below init as they should not exist
   if(diff > 0) {
     this.dataList.splice(0, diff);
+    // Trim carrousel
+    if(this.carrousel) {
+      this.carrousel.trim(0, diff);
+      this.preTransformAdjust(diff);
+    }
   }
   this.init = newInit; 
   this.newCurrentItem = offset - this.init;
@@ -249,6 +254,7 @@ App.Components.Slide.prototype.prepend = function(items) {
   // Render Carrousel
   if(this.carrousel) {
     this.carrousel.prepend(items);
+    this.preTransformAdjust(-items.length);
   }
   this.rightTrim();
   this.isLoading = false;
@@ -288,6 +294,7 @@ App.Components.Slide.prototype.leftTrim = function() {
     // Trim carrousel
     if(this.carrousel) {
       this.carrousel.trim(offset, diff);
+      this.preTransformAdjust();
     }
   }
   
@@ -386,13 +393,27 @@ App.Components.Slide.prototype.updateCarrousel = function() {
   // Find new offset
   this.transformValue = this.carrousel.getTransformValue();
   // Tranform
+  this.setTransform();
+  return this;
+};
+
+App.Components.Slide.prototype.setTransform = function() {
   var tf = (this.carrousel.transformType || 'translateX') + '(-' + this.transformValue + 'px)';
   this.carrousel.carrouselElement.style.msTransform = tf;
   this.carrousel.carrouselElement.style.MozTransform = tf;
   this.carrousel.carrouselElement.style.webkitTransform = tf;
   this.carrousel.carrouselElement.style.OTransform = tf;
   this.carrousel.carrouselElement.style.transform = tf;
-  return this;
+};
+
+App.Components.Slide.prototype.preTransformAdjust = function(diff) {
+  addClass(this.carrousel.carrouselElement, App.cssClasses.disableTransition);
+  if(diff) {
+    this.moveRoot -= diff;
+  }
+  this.transformValue = this.carrousel.getTransformValue();
+  // Tranform
+  this.setTransform();
 };
 
 App.Components.Slide.prototype.postTransformUpdate = function() {
