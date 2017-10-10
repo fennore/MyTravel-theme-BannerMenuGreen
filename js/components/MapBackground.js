@@ -58,6 +58,8 @@ App.Components.MapBackground.prototype.render = function() {
     editable: false, // Resizable
     visible: false // Visible
   });
+  // Request route
+  request('GET', App.basePath + '/api/encodedroute', null, this.drawEncodedRoute.bind(this));
   return this;
 };
 
@@ -86,8 +88,9 @@ App.Components.MapBackground.prototype.enableNavigation = function() {
 App.Components.MapBackground.prototype.drawEncodedRoute = function(stages) {
   var polyLine;
   var coordinatesWrap;
-  
+  var j = 0;
   for (var key in stages) {
+    ++j;
     var stage = stages[key];
     var l = stage.length;
     for(var i = 0; i < l; ++i) {
@@ -95,7 +98,7 @@ App.Components.MapBackground.prototype.drawEncodedRoute = function(stages) {
       // Construct the polygon
       polyLine = new google.maps.Polyline({
         path: coordinatesWrap,
-        strokeColor: '#' + (255 - 17*(i%3)).toString(16) + (34 + 34*(i%3)).toString(16) + (17 + 64*(i%2)).toString(16),
+        strokeColor: '#' + (255 - 17*(j%3)).toString(16) + (34 + 34*(j%3)).toString(16) + (17 + 64*(j%2)).toString(16),
         strokeOpacity: 0.7,
         strokeWeight: 2
       });
