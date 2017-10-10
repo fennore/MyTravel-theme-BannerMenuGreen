@@ -161,12 +161,9 @@ App.Components.Slide.prototype.findItemSlidePrev = function(key) {
  * @returns {undefined}
  */
 App.Components.Slide.prototype.updateState = function(diff) {
-  this.init -= diff;
-  this.currentItem += diff;
-  this.newCurrentItem += diff;
-  this.moveNext += diff;
-  this.movePrev += diff;
-  this.moveRoot += diff;
+  this.init += diff;
+  this.currentItem -= diff;
+  this.newCurrentItem -= diff;
 };
 
 /**
@@ -288,13 +285,13 @@ App.Components.Slide.prototype.leftTrim = function() {
   var offset = 0;
   if(diff > 0) {
     // Update state for trim on the left
-    this.updateState(-diff);
+    this.updateState(diff);
     // Trim
     this.dataList.splice(offset, diff);
     // Trim carrousel
     if(this.carrousel) {
       this.carrousel.trim(offset, diff);
-      this.preTransformAdjust();
+      this.preTransformAdjust(diff);
     }
   }
   
@@ -338,8 +335,6 @@ App.Components.Slide.prototype.updateSlide = function() {
   this.postTransformUpdate();
   // update pager
   this.updatePager();
-  // update slide nav
-  this.updateSlideNav();
   // Enable buttons
   this.enableButtons();
   
@@ -408,9 +403,9 @@ App.Components.Slide.prototype.setTransform = function() {
 
 App.Components.Slide.prototype.preTransformAdjust = function(diff) {
   addClass(this.carrousel.carrouselElement, App.cssClasses.disableTransition);
-  if(diff) {
-    this.moveRoot -= diff;
-  }
+  this.moveNext -= diff;
+  this.movePrev -= diff;
+  this.moveRoot -= diff;
   this.transformValue = this.carrousel.getTransformValue();
   // Tranform
   this.setTransform();
@@ -432,16 +427,6 @@ App.Components.Slide.prototype.updatePager = function() {
   }
   this.pager.update();
   this.pager.setCurrent();
-};
-
-/**
- * 
- * @returns {undefined}
- */
-App.Components.Slide.prototype.updateSlideNav = function() {
-  if(this.carrousel) {
-    
-  }
 };
 
 /**

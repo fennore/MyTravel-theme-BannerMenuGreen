@@ -67,7 +67,7 @@ App.Components.TimelineSlide.prototype.build = function(items) {
   // The first request can be the last items and needs to be bigger than 1 item
   // API knows and returns the new offset if this had to happen
   if(items.offset && items.offset !== this.slide.init) {
-    this.slide.updateState(this.slide.init - items.offset);
+    this.slide.updateState(items.offset - this.slide.init);
   }
   // Set slide total
   if(items.total) {

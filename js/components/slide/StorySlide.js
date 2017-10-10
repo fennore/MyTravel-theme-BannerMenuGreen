@@ -55,7 +55,7 @@ App.Components.StorySlide.prototype.build = function(stories) {
   // The first request can be the last items and needs to be bigger than 1 item
   // API knows and returns the new offset if this had to happen
   if(stories.offset && stories.offset !== this.slide.init) {
-    this.slide.updateState(this.slide.init - stories.offset);
+    this.slide.updateState(stories.offset - this.slide.init);
   }
   // Set slide total
   if(stories.total) {
