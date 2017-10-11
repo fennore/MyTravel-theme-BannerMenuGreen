@@ -109,8 +109,8 @@ App.Components.MapBackground.prototype.drawEncodedRoute = function(stages) {
 
 App.Components.MapBackground.prototype.updateMarkedLocation = function(LatLng) {
   //var LatLng = new google.maps.LatLng(parseFloat(img.lat), parseFloat(img.lng));
-  this.markedLocation.setCenter(LatLng);
-  this.markedLocation.setVisible(true);
+  this.locationMarker.setCenter(LatLng);
+  this.locationMarker.setVisible(true);
   this.googleMap.setZoom(this.mapZoom.default);
   this.googleMap.panTo(LatLng);
 };
