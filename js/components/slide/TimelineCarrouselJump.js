@@ -51,6 +51,8 @@ App.Components.TimelineCarrouselJump.prototype.switchToItem = function(event) {
   var target = event.target;
   var targetValue = this.jumpList[target.textContent];
   if(target.parentNode === this.jumpElement && (targetValue || targetValue === 0) && targetValue < this.parent.parent.total) {
-    this.parent.parent.switchToItem(targetValue);
+    var customEvent = new App.Models.Event('click', target.parentNode, null, null);
+    customEvent.clickValue = targetValue;
+    App.page.timelineSlide.switchItem(customEvent);
   }
 };

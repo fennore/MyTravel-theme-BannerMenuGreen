@@ -202,8 +202,8 @@ App.Components.Slide.prototype.switchToItem = function(offset) {
     this.dataList.splice(0, diff);
     // Trim carrousel
     if(this.carrousel) {
-      this.carrousel.trim(0, diff);
       this.preTransformAdjust(diff);
+      this.carrousel.trim(0, diff);
     }
   }
   this.init = newInit; 
@@ -403,9 +403,9 @@ App.Components.Slide.prototype.setTransform = function() {
 
 App.Components.Slide.prototype.preTransformAdjust = function(diff) {
   addClass(this.carrousel.carrouselElement, App.cssClasses.disableTransition);
-  this.moveNext -= diff;
-  this.movePrev -= diff;
-  this.moveRoot -= diff;
+  this.moveNext = Math.max(Math.min(this.moveNext - diff, this.dataList.length - 1), 0);
+  this.movePrev = Math.max(Math.min(this.movePrev - diff, this.dataList.length - 1), 0);
+  this.moveRoot = Math.max(Math.min(this.moveRoot - diff, this.dataList.length - 1), 0);
   this.transformValue = this.carrousel.getTransformValue();
   // Tranform
   this.setTransform();

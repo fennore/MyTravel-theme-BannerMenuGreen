@@ -129,6 +129,11 @@ App.Components.TimelineSlide.prototype.switchItem = function (event) {
   }
   var l = this.slide.dataList.length;
   var newAbsolutePosition = Math.max(this.slide.init + newPosition, 0);
+  // Jump element sets absolute position
+  if(this.slide.carrousel.jump.jumpElement && target === this.slide.carrousel.jump.jumpElement) {
+    newAbsolutePosition = event.clickValue;
+    newPosition = newAbsolutePosition - this.slide.init;
+  }
   // Determine going left or right, size and start
   var cbAddSlideItems;
   var reqCount = 0;

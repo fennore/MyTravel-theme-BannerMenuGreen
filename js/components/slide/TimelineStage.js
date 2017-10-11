@@ -148,7 +148,7 @@ App.Components.TimelineStage.prototype.extendNavigation = function() {
 };
 
 App.Components.TimelineStage.prototype.imagePreload = function() {
-  if(this.parent.currentItem < this.parent.total - 1) {
+  if(this.parent.currentItem < this.parent.dataList.length - 1) {
     var preloadNext = new Image();
     preloadNext.src = App.basePath + '/img/' + this.parent.dataList[this.parent.currentItem + 1].path;
   }
