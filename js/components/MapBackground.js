@@ -21,29 +21,22 @@ App.Components.MapBackground.prototype.render = function() {
   }
   // Set google map
   this.googleMap = new google.maps.Map(this.mapElement, {
-    center: App.Settings.DefaultLocation,
-    scrollwheel: false,
     // Apply the map style array to the map.
     styles: App.GmapStyle.PastelGreen,
-    zoom: App.Settings.MapZoomOverview,
     disableDefaultUI: true,
     disableDoubleClickZoom: true,
-    gestureHandling: 'none', // auto | cooperative
     mapTypeControl: false,
+    streetViewControl: false,
     mapTypeControlOptions: {
       style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
       position: google.maps.ControlPosition.TOP_CENTER
     },
-    zoomControl: false,
     zoomControlOptions: {
       position: google.maps.ControlPosition.RIGHT_TOP
     },
-    scaleControl: false,
-    streetViewControl: false,
     streetViewControlOptions: {
       position: google.maps.ControlPosition.RIGHT_TOP
     },
-    fullscreenControl: false
   });
   // Set location marker
   this.locationMarker = new google.maps.Circle({
@@ -58,11 +51,17 @@ App.Components.MapBackground.prototype.render = function() {
     editable: false, // Resizable
     visible: false // Visible
   });
+  this.reset();
   // Request route
   request('GET', App.basePath + '/api/encodedroute', null, this.drawEncodedRoute.bind(this));
   return this;
 };
-
+App.Components.MapBackground.prototype.reset = function() {
+  this.disableNavigation();
+  this.hideMarkedLocation();
+  this.googleMap.setZoom(App.Settings.MapZoomOverview);
+  this.googleMap.panTo(App.Settings.DefaultLocation);
+}
 App.Components.MapBackground.prototype.disableNavigation = function() {
   this.googleMap.setOptions({
     zoomControl: false,

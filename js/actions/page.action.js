@@ -40,6 +40,9 @@ App.Actions.Page = {
     }
     this.setWrapClass(App.page.wrapClass);
     document.title = App.page.title;
+    if(App.Map) {
+      App.Map.reset();
+    }
     // Render page
     App.page.render();
     App.page.menuLink.setCurrent();

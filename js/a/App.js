@@ -33,20 +33,17 @@ App = {
   },
   // Render method
   render : function() {
-    if(this.Router) {
-      this.Router.resolve(window.location.pathname);
-    }
     if(this.menuMain) {
       this.menuMain.render();
     }
     if(this.menuMinor) {
       this.menuMinor.render();
     }
-    if(this.menuMinor) {
-      this.menuMinor.render();
-    }
     if(this.Map) {
       this.Map.render();
+    }
+    if(this.Router) {
+      this.Router.resolve(window.location.pathname);
     }
   },
   // Update path

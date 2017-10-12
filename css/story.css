@@ -14,7 +14,7 @@
 #storystage > article,
 #storystage + article {
   padding: 1em 0;
-  background: #eefeee url(../views/default/img/bg-written.jpg);
+  background: #eefeee url(../views/euroturkey/img/bg-written.jpg);
   text-align: center;
 }
 #storystage article footer,
@@ -52,7 +52,7 @@
   left: 0;
 }
 .story button.stage-prev .icon {
-  left: 0;
+  left: .2;
 }
 .story button.stage-next {
   right: 0;
@@ -68,10 +68,19 @@
     padding: 6em 0 0;
   }
   #storystage article .written {
-    padding: 1em 8em 1em 2em;
+    padding: 1em 8em 1em 3em;
+  }
+  .story button {
+    width: 3em;
+  }
+  .story button.stage-prev .icon {
+    left: 1em;
   }
   .story button.stage-next {
     width: 7.4em;
+  }
+  .story button.stage-next .icon {
+    right: 1em;
   }
   #storystage article footer {
     padding-right: 7.4em;
