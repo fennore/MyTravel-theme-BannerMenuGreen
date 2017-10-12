@@ -24,9 +24,9 @@ App.Components.Menu.prototype.render = function() {
 };
 
 App.Components.Menu.prototype.reset = function() {
-  var l = this.menuElement.children.length;
+  var l = this.linksBag.length;
   for (var i = 0; i < l; ++i) {
-    rmClass(this.menuElement.children[i], App.cssClasses.mainMenuActive);
+    this.linksBag[i].reset();
   };
 };
 

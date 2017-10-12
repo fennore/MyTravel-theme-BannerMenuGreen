@@ -19,6 +19,13 @@ App.Components.MenuLink.prototype.render = function() {
   return this;
 };
 
+App.Components.MenuLink.prototype.reset = function() {
+  this.linkElement.textContent = this.title;
+  this.linkElement.title = this.title;
+  this.linkElement.href = App.basePath + '/' + this.link;
+  rmClass(this.linkElement, App.cssClasses.mainMenuActive);
+};
+
 App.Components.MenuLink.prototype.navigate = function(event) {
   event.original.preventDefault();
   App.Router.navigate(this.link).resolve(window.location.pathname);

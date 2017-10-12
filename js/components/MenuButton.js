@@ -36,6 +36,7 @@ App.Components.MenuButton.prototype.reset = function() {
     .nodeValue = this.title;
   this.linkElement.title = this.title;
   this.linkElement.href = App.basePath + '/' + this.link;
+  rmClass(this.linkElement, App.cssClasses.mainMenuActive);
 };
 
 App.Components.MenuButton.prototype.navigate = function(event) {
