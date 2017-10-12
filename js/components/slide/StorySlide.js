@@ -12,6 +12,10 @@
  */
 App.Components.StorySlide = function() {
   var storageKey = 'currentStory';
+  // Check previous page to fabricate saved story
+  if(App.previousPage && (App.previousPage.linkedStoryPosition || App.previousPage.linkedStoryPosition === 0)) {
+    localStorage.setItem(storageKey, App.previousPage.linkedStoryPosition);
+  }
   // Set Components
   var storyStage = new App.Components.StoryStage();
   this.slide = new App.Components.Slide({

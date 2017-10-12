@@ -172,26 +172,20 @@ App.Components.TimelineStage.prototype.onStageLoad = function() {
  * 
  */
 App.Components.TimelineStage.prototype.setStoryLink = function() {
-  var mnuItem = App.menuMain.getElement().children[0];
-  var item = this.parent.getCurrentItemData();/*
-  if(item.link) {
-    var story = Data.slideLinkedStoryList[img.storyid];
-    addClass(mnuItem, 'is-linked');
-    var stoTitle = story.title;
+  var mnuItem = App.menuMain.linksBag[0];
+  var item = this.parent.getCurrentItemData();
+  if(item.storylink) {
+    addClass(mnuItem.linkElement, 'is-linked');
     // update title
-    mnuItem
+    mnuItem.linkElement
       .querySelector('svg')
       .nextSibling
-      .nodeValue = stoTitle;
-    mnuItem.title = stoTitle;
-    mnuItem.href = Data.basePath + '/story/' + story.path;
+      .nodeValue = item.storylink.title;
+    mnuItem.linkElement.title = item.storylink.title;
+    App.page.linkedStoryPosition = item.storylink.weight;
   } else {
-    rmClass(mnuItem, 'is-linked');
-    mnuItem
-      .querySelector('svg')
-      .nextSibling
-      .nodeValue = 'Writings';
-    mnuItem.title = 'Writings';
-    mnuItem.href = Data.basePath + '/story';
-  }*/
+    rmClass(mnuItem.linkElement, 'is-linked');
+    mnuItem.reset();
+    App.page.linkedStoryPosition = null;
+  }
 };

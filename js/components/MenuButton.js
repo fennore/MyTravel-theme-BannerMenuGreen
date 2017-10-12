@@ -29,6 +29,15 @@ App.Components.MenuButton.prototype.render = function() {
   return this;
 };
 
+App.Components.MenuButton.prototype.reset = function() {
+  this.linkElement
+    .querySelector('svg')
+    .nextSibling
+    .nodeValue = this.title;
+  this.linkElement.title = this.title;
+  this.linkElement.href = App.basePath + '/' + this.link;
+};
+
 App.Components.MenuButton.prototype.navigate = function(event) {
   event.original.preventDefault();
   App.Router.navigate(this.link).resolve(window.location.pathname);

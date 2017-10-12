@@ -2,6 +2,7 @@ App.Models.Story = function (data) {
   this.title = data.title;
   this.path = data.path;
   this.content = data.content;
+  this.weight = data.weight;
   this.imagelist = []; // data.link
 };
 

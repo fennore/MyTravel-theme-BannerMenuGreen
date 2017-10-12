@@ -9,7 +9,9 @@ App.Models.TimelineItem = function (data) {
   this.content = data.content;
   this.thumbnail = data.setting.thumbnail; // data.link
   this.location = data.setting.location;
-  this.storylink;
+  if(data.storylink) {
+    this.storylink = new App.Models.Story(data.storylink);
+  }
 };
 
 App.Models.createTimelineItem = function (data) {
