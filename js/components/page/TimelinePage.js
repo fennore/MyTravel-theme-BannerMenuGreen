@@ -1,7 +1,6 @@
 /**
- * 
- * @param {type} pageInfo
- * @returns {App.Components.TimelinePage}
+ * @todo should inherit from a Page Component
+ * see https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance
  */
 App.Components.TimelinePage = function(pageInfo) {
   this.pageElement = document.getElementById('content');

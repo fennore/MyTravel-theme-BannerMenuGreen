@@ -1,3 +1,7 @@
+/**
+ * @todo should inherit from a Page Component
+ * see https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance
+ */
 App.Components.StoryPage = function(pageInfo) {
   this.pageElement = document.getElementById('content');
   this.template = '<main id="content"></main>';

@@ -1,4 +1,6 @@
 /**
+ * @todo should inherit from the Slide Component instead of embedding it
+ * see https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance
  * @returns {App.Components.TimelineSlide}
  */
 App.Components.TimelineSlide = function() {

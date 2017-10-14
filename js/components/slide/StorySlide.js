@@ -7,6 +7,8 @@
  * 
  * @todo implement vertical title carrousel
  * @todo implement lazy loading per 7 items, also keep the internal memory limited to 2*7 items
+ * @todo should inherit from athe Slide Component instead of embedding it
+ * see https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance
  * 
  * @returns {undefined}
  */

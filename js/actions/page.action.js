@@ -1,3 +1,8 @@
+/**
+ * @todo this is not an "action" this should just be in object inheritance
+ * see https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance
+ * @type type
+ */
 App.Actions.Page = {
   /**
    * Reset page.
