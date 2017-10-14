@@ -19,7 +19,8 @@ App.Components.TimelineCarrouselJump = function() {
     'Finland' : 621,
     'Baltic' : 636,
     'Poland' : 650,
-    'Hill and river' : 687
+    'Hill and river' : 687,
+    'Compilation' : 770
   };
 };
 

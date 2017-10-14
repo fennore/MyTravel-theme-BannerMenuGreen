@@ -12,6 +12,7 @@ App.Components.Slide = function(slideData) {
   this.init = null;
   this.total = 0;
   this.isLoading = false;
+  this.lastViewSection = false;
   this.transformValue = 0;
   this.moveRoot = 0;
   this.moveNext = 0;
@@ -113,6 +114,7 @@ App.Components.Slide.prototype.findItemSlideNext = function(key) {
     // return current active item
     // because we don't have to move for already visible items
     this.moveNext = this.moveRoot;
+    this.lastViewSection = true;
     return this.moveNext;
   }
   var elm = this.carrousel.carrouselElement.children[++key];
@@ -121,6 +123,7 @@ App.Components.Slide.prototype.findItemSlideNext = function(key) {
 
   if(elm && transformCheckNext) {
     this.moveNext = key;
+    this.lastViewSection = false;
     return this.moveNext;
   } else if(elm) {
     return this.findItemSlideNext(key);
@@ -382,7 +385,7 @@ App.Components.Slide.prototype.updateCarrousel = function() {
     this.moveRoot = this.movePrev;
   } else if(checkAfter) {
     this.moveRoot = this.moveNext;
-  } else if(this.currentItem < this.movePrev || this.currentItem > this.moveNext*2 - this.moveRoot - 1) {
+  } else if(this.currentItem < this.movePrev || (this.currentItem > this.moveNext*2 - this.moveRoot - 1 && !this.lastViewSection)) {
     this.moveRoot = this.currentItem;
   }
   // Find new offset
