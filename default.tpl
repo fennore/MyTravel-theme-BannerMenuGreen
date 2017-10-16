@@ -4,6 +4,7 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     {% block head %}
+      <link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}">
       <link rel="stylesheet" type="text/css" href="{{path('cssbundle')}}">
       <link rel="stylesheet" href="{{asset('lib/baguetteBox/baguetteBox.min.css')}}"> 
       <title>{% block title %}Welcome to the story of my Euro-Turkey bicycle tour!{% endblock %}</title>

@@ -217,7 +217,7 @@ App.Components.Slide.prototype.switchToItem = function(offset) {
     addClass(this.stage.stageElement, App.cssClasses.loading);
   }
   if(this.carrousel) {
-    rmClass(this.carrousel.carrouselElement.children[this.currentItem], App.cssClasses.focus);
+    rmClass(this.carrousel.carrouselElement.children[this.currentItem - diff], App.cssClasses.focus);
   }
 
   this.currentItem = this.newCurrentItem;

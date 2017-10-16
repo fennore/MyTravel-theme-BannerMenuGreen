@@ -8,7 +8,7 @@
 
 {% block content %}
 <main id="content">
-  <article>
+  <article class="written">
     <header>
       <h1>Not allowed 403</h1>
     </header>

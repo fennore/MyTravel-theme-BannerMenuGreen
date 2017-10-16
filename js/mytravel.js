@@ -1,9 +1,9 @@
 /**
  * @todo Step 1: fetch config data from php or have dynamic generated js bit in jsbundle {App.Config}
  */
-App.basePath = '/mytravel2'; // Equal to php basepath
+App.basePath = ''; // Equal to php basepath
 App.siteName = window.location.hostname.charAt(0).toUpperCase() + window.location.hostname.slice(1);
-App.Router = new Navigo(App.basePath, false, '#!');
+App.Router = new Navigo(App.basePath + '/', false, '#!');
 App.Router
   .on({
     'manage/geo': function() {},

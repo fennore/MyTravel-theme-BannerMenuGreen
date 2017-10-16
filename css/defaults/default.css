@@ -48,6 +48,12 @@ p {
   user-select: none;           /* Non-prefixed version, currently
                                   not supported by any browser */
 }
+a {
+  color: #080;
+}
+a:hover {
+  color: #0c0;
+}
 img {
   -webkit-transition: all .3s ease-out;
   -moz-transition: all .3s ease-out;

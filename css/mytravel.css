@@ -13,6 +13,9 @@
   display: block;
   clear: both;
 }
+.info footer {
+  clear: both;
+}
 .intro > article{
   text-align: center;
   padding-top: 2em;
