@@ -23,7 +23,7 @@ App.Components.MenuLink.prototype.reset = function() {
   this.linkElement.textContent = this.title;
   this.linkElement.title = this.title;
   this.linkElement.href = App.basePath + '/' + this.link;
-  rmClass(this.linkElement, App.cssClasses.mainMenuActive);
+  rmClass(this.linkElement, App.cssClasses.menuActive);
 };
 
 App.Components.MenuLink.prototype.navigate = function(event) {
@@ -32,6 +32,6 @@ App.Components.MenuLink.prototype.navigate = function(event) {
 }
 
 App.Components.MenuLink.prototype.setCurrent = function() {
-  addClass(this.linkElement, App.cssClasses.mainMenuActive);
+  addClass(this.linkElement, App.cssClasses.menuActive);
   return this;
 };
