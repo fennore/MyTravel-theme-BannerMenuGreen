@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta name="viewport" content="initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     {% block head %}
       <link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}">
@@ -26,20 +26,20 @@
     <nav id="menu">
       {% block menu %}
       <a href="{{path('story')}}" title="Scribbles">
-        <svg class="icon story-svg">
-        <use xlink:href="#story-svg"></use>
+        <svg class="icon story-svg" pointer-events="none">
+          <use xlink:href="#story-svg"></use>
         </svg>
         Scribbles
       </a>
       <a href="{{path('timeline')}}" title="Timeline">
-        <svg class="icon timeline-svg">
-        <use xlink:href="#timeline-svg"></use>
+        <svg class="icon timeline-svg" pointer-events="none">
+          <use xlink:href="#timeline-svg"></use>
         </svg>
         Timeline
       </a>
       <a href="{{path('about')}}" title="About">
-        <svg class="icon info-svg">
-        <use xlink:href="#info-svg"></use>
+        <svg class="icon info-svg" pointer-events="none">
+          <use xlink:href="#info-svg"></use>
         </svg>
         About
       </a>

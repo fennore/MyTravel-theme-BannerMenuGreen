@@ -13,8 +13,8 @@ App.Components.MenuButton = function(parent, link, title, icon, position) {
   this.icon = icon;
   this.position = position;
   this.template = '<a href="' + App.basePath + '/' + this.link + '" title="' + this.title + '">' +
-      '<svg class="icon ' + this.icon + '"><use xlink:href="#' + this.icon + '"></use></svg>' +
-    this.title + '</a>';
+    '<svg class="icon ' + this.icon + '" pointer-events="none"><use xlink:href="#' + this.icon + '"></use></svg>' +
+  this.title + '</a>';
 };
 
 App.Components.MenuButton.prototype.render = function() {
