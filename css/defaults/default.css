@@ -9,6 +9,7 @@ html {
 }
 html, body {
   max-width: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
   font-size: 1em;
@@ -84,6 +85,7 @@ button {
   background: rgba(255,255,255, .95);
   display: inline-block;
 }
+
 button:hover {
   cursor: pointer;
 }
