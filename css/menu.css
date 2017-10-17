@@ -15,7 +15,8 @@ a .icon {
 a.current .icon {
   fill: #080;
 }
-a.current:hover .icon {
+a.current:hover .icon,
+a.current:focus .icon {
   fill: #222;
   color: #222;
 }
@@ -47,7 +48,8 @@ a.current:hover .icon {
           transform: translateX(-100%);
   left: 3.5em;
 }
-#menu a:hover {
+#menu a:hover,
+#menu a:focus {
   -webkit-transform: translateX(0);
           transform: translateX(0);
   left: 0;
@@ -82,10 +84,12 @@ a.current:hover .icon {
 #menu a.current {
   color: #080;
 }
-#menu a:hover {
+#menu a:hover,
+#menu a:focus {
   color: #222; 
 }
-#menu a:hover .icon {
+#menu a:hover .icon,
+#menu a:focus .icon {
   fill: #080;
 }
 #content.timeline + #menu.retract a {
@@ -105,7 +109,9 @@ a.current:hover .icon {
   border-color: transparent transparent #ccffcc transparent;
 }
 #content.timeline + #menu.retract:hover a,
-#menu.retract:hover a {
+#content.timeline + #menu.retract a:focus,
+#menu.retract:hover a,
+#menu.retract a:focus {
   opacity: 1;
 }
 
@@ -117,7 +123,8 @@ a.current:hover .icon {
   float: right;
   margin-left: .6em;
 }
-#menu-minor a:hover {
+#menu-minor a:hover,
+#menu-minor a:focus {
   color: #080;
 }
 
@@ -135,15 +142,18 @@ a.current:hover .icon {
     right: -2.04em;
   }
   #content.timeline + #menu a,
-  #content.timeline + #menu a:hover {
+  #content.timeline + #menu a:hover,
+  #content.timeline + #menu a:focus {
     left: 0;
   }
   #menu a.current,
-  #menu a:hover {
+  #menu a:hover,
+  #menu a:focus {
     color: #080;
     text-indent: 0;
   }
-  #menu a:hover {
+  #menu a:hover,
+  #menu a:focus {
     color: #222;
   }
 }

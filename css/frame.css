@@ -110,7 +110,8 @@ body {
 #content.timeline + #menu + #menu-minor.retract {
   bottom: -1.5em;
 }
-#menu-minor.retract:hover {
+#menu-minor.retract:hover,
+#menu-minor.retract:focus {
   bottom: 0;
 }
 

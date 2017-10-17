@@ -52,7 +52,8 @@ p {
 a {
   color: #080;
 }
-a:hover {
+a:hover,
+a:focus {
   color: #0c0;
 }
 img {
@@ -100,10 +101,12 @@ button[disabled]:hover {
   cursor: default;
 }
 button[disabled] .icon,
-button[disabled]:hover .icon {
+button[disabled]:hover .icon,
+button[disabled]:focus .icon {
   fill: #efefef;
 }
-button:hover .icon {
+button:hover .icon,
+button:focus .icon {
   fill:#080;
 }
 

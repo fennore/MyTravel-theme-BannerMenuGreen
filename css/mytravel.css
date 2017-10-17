@@ -82,7 +82,8 @@
   background-color:burlywood;
   display: block;
 }
-.linkstory:hover {
+.linkstory:hover,
+.linkstory:focus {
   color: orange;
 }
 .linkstory.selected {
