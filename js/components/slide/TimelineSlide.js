@@ -177,7 +177,7 @@ App.Components.TimelineSlide.prototype.switchItem = function (event) {
 };
 
 App.Components.TimelineSlide.prototype.onMouseMove = function () {
-  App.Timers.add('stage-show-mousemove', this.doExtends.bind(this), 250);
+  this.doExtends();
   App.Timers.add('stage-hide-mousemove', this.doRetracts.bind(this), 1250);
 };
 /**
