@@ -24,12 +24,20 @@ App.Components.StageToggle.prototype.setParent = function(parent) {
   return this;
 }
 
+App.Components.StageToggle.prototype.out = function() {
+  addClass(this.parent.getElement(), App.cssClasses.toggleOut);
+  App.Map.enableNavigation();
+}
+
+App.Components.StageToggle.prototype.in = function() {
+  rmClass(this.parent.getElement(), App.cssClasses.toggleOut);
+   App.Map.disableNavigation();
+}
+
 App.Components.StageToggle.prototype.doToggle = function() {
   if(this.parent.getElement().className && this.parent.getElement().className.indexOf(App.cssClasses.toggleOut) > -1) {
-    rmClass(this.parent.getElement(), App.cssClasses.toggleOut);
-    App.Map.disableNavigation();
+    this.in();
   } else {
-    addClass(this.parent.getElement(), App.cssClasses.toggleOut);
-    App.Map.enableNavigation();
+    this.out();
   }
 };

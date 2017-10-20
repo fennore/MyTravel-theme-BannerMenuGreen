@@ -73,6 +73,8 @@ App.Components.TimelineStage.prototype.update = function(item) {
   this.titleElement.textContent = item.title;
   // Set story link
   this.setStoryLink();
+  // Toggle in
+  this.toggle.in();
   // Change location
   if(item.location) {
     var LatLng = new google.maps.LatLng(parseFloat(item.location.lat), parseFloat(item.location.lng));
