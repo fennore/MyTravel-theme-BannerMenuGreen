@@ -45,8 +45,8 @@ App.Components.TimelineSlide.prototype.render = function() {
   // Render
   this.slide.render();
   // Remove possible events
-  var kpNextEvent = new App.Models.Event('keypress', null, this.switchItem.bind(this), 39);
-  var kpPrevEvent = new App.Models.Event('keypress', null, this.switchItem.bind(this), 37);
+  var kpNextEvent = new App.Models.Event('keydown', null, this.switchItem.bind(this), 39);
+  var kpPrevEvent = new App.Models.Event('keydown', null, this.switchItem.bind(this), 37);
   App.Events
     .remove(kpNextEvent)
     .remove(kpPrevEvent);

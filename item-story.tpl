@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% block content %}
-<div id="content" class="story">
+<main id="content" class="story">
   <section id="storystage">
     <button class="prev" disabled="disabled" type="button">
       Previous
@@ -55,5 +55,5 @@
     </article>
     {% endblock %}
   </section>
-</div>
+</main>
 {% endblock %}

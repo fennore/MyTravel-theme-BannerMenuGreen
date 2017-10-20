@@ -22,7 +22,7 @@ body {
   position: relative;
   overflow: hidden;
   padding-top: 2em;
-  z-index: 1;
+  z-index: 11;
 }
 #content.timeline {
   position: fixed;
@@ -45,7 +45,6 @@ body {
 }
 
 #menu {
-  /* @todo use animation and animation-direction reverse */
   -webkit-transition: top .5s, transform .7s, left .7s .6s;
   -moz-transition: top .5s, transform .7s, left .7s .6s;
   -o-transition: top .5s, transform .7s, left .7s .6s;
@@ -58,7 +57,7 @@ body {
           transform: rotateZ(90deg) translate(0, -50%);
   -webkit-transform-origin: top left;
           transform-origin: top left;
-  z-index: 3;
+  z-index: 13;
 }
 #content.timeline + #menu {
   -webkit-transition: left .5s, transform .7s .4s, top .7s .4s;
@@ -85,7 +84,7 @@ body {
   position: absolute;
   bottom: 0;
   left: 0;
-  z-index: 2;
+  z-index: 12;
 }
 #content.timeline + #menu + #menu-minor {
   -webkit-transition: bottom .2s;
@@ -127,5 +126,17 @@ body {
   }
   #content.story {
     padding-top: 2em;
+  }
+}
+
+/* Unfortunate required IE hack because rotating the menu parent of links
+   in a transition makes the links only clickable where the new visible link overlaps with the original not transformed links */
+
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+  /* IE10+ CSS styles go here */
+  #menu {
+    top: 2em;
+    left: 0;
+    transform: none;
   }
 }

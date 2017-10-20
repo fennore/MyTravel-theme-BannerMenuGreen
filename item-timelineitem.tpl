@@ -27,7 +27,7 @@
 {% endblock %}
 
 {% block content %}
-<div id="content" class="image timeline">
+<main id="content" class="image timeline">
 
   <figure id="timeline-in-focus" data-pos="{{position}}">
     <h1>Timeline</h1>
@@ -58,5 +58,5 @@
     </button>
   </div>
   <div id="pager-buttons"></div>
-</div>
+</main>
 {% endblock %}

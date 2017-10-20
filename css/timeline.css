@@ -76,6 +76,7 @@ figcaption.empty {
   width: 25%;
   overflow: hidden;
   text-indent: -200%;
+  z-index: 5;
 }
 .timeline figure button .icon {
   -webkit-transition: left 1s, right 1s;
@@ -97,7 +98,7 @@ figcaption.empty {
 }
 .timeline figure button.stage-next .icon {
   left: auto;
-  right: 0;
+  right: .25em;
 }
 .timeline figure button.stage-next.retract .icon {
   right: -2em;
@@ -116,6 +117,7 @@ figcaption.empty {
   left: 0;
   width: 100%;
   pointer-events:auto;
+  z-index: 8;
 }
 .timeline-slide-wrapper.retract {
   opacity: 0;
@@ -134,6 +136,7 @@ figcaption.empty {
   white-space: nowrap;
   display: block;
   line-height: 0;
+  height: 70px; /* Fix for extra newline in chrome */
 }
 #timeline-slide.no-smooth {
   -webkit-transition: transform 0s, opacity .3s;
@@ -288,7 +291,7 @@ figcaption.empty {
   color: #cfc;
   font-size: 4em;
   font-weight: 100;
-  z-index: 999;
+  z-index: 9;
   display: none;
 }
 #stage-toggle:hover,
@@ -298,6 +301,9 @@ figcaption.empty {
 }
 
 @media screen and (min-height: 480px) {
+  #timeline-slide {
+    height: 120px; /* fix for chrome empty newline bug */
+  }
   #timeline-slide img {
     height: 120px;
     width: 160px;
@@ -328,4 +334,11 @@ figcaption.empty {
     left: 33%;
     max-width: 48em;
   }
+  .timeline figure button .icon {
+    left: 1em;
+  }
+  .timeline figure button.stage-next .icon {
+    right: 1em;
+  }
+
 }

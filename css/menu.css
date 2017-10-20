@@ -157,3 +157,13 @@ a.current:focus .icon {
     color: #222;
   }
 }
+
+/* Unfortunate required IE hack because rotating the menu parent of links
+   in a transition makes the links only clickable where the new visible link overlaps with the original not transformed links */
+
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+  /* IE10+ CSS styles go here */
+  #menu a .icon {
+    transform: translateY(-50%);
+  }
+}

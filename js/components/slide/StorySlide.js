@@ -43,8 +43,8 @@ App.Components.StorySlide = function() {
 App.Components.StorySlide.prototype.render = function() {
   // Render
   this.slide.render();
-  var kpNextEvent = new App.Models.Event('keypress', null, this.switchStory.bind(this), 39);
-  var kpPrevEvent = new App.Models.Event('keypress', null, this.switchStory.bind(this), 37);
+  var kpNextEvent = new App.Models.Event('keydown', null, this.switchStory.bind(this), 39);
+  var kpPrevEvent = new App.Models.Event('keydown', null, this.switchStory.bind(this), 37);
   // Remove keypress events
   App.Events
     .remove(kpNextEvent)
