@@ -23,11 +23,13 @@ App.Components.MenuLink.prototype.reset = function() {
   this.linkElement.textContent = this.title;
   this.linkElement.title = this.title;
   this.linkElement.href = App.basePath + '/' + this.link;
+  this.linkElement.blur();
   rmClass(this.linkElement, App.cssClasses.menuActive);
 };
 
 App.Components.MenuLink.prototype.navigate = function(event) {
   event.original.preventDefault();
+  this.linkElement.blur();
   App.Router.navigate(this.link).resolve(window.location.pathname);
 }
 
