@@ -9,7 +9,7 @@ App.Events.eventsListener = function(e) {
   var e = e || window.event;
   var target = e.target;
   var code = e.keyCode || e.which;
-  for(var k = 0; k < this.eventList[e.type].length; k++){
+  for(var k = 0; this.eventList[e.type] && k < this.eventList[e.type].length; k++){
     var event = this.eventList[e.type][k];
     event.original = e;
     // Events on target
@@ -17,8 +17,12 @@ App.Events.eventsListener = function(e) {
       (event.cb)(event);
     }
     // Keybind events
-    if(!event.element && event.code === code) {
+    if(!event.element && event.code && event.code === code) {
       (event.cb)(event);
+    }
+    // Touch
+    if(e.type === 'touchmove') {
+      this.handleTouchMove(event);
     }
   }
 };
@@ -45,7 +49,7 @@ App.Events.removeListener = function(type) {
 
 /**
  * Add an event
- * @param {type} event
+ * @param {App.Models.Event} event
  * @returns {App.Events}
  */
 App.Events.add = function(event) {
@@ -62,6 +66,38 @@ App.Events.add = function(event) {
     }
   }
   this.eventList[event.type].push(event);
+  return this;
+};
+
+/**
+ * Add a touch event
+ * @param {App.Models.Event} event
+ * @returns {App.Events}
+ */
+App.Events.addTouch = function(event) {
+  if(!this.eventList['touchmove']) {
+    this.eventList['touchmove'] = [event];
+    this.addListener('touchmove');
+    // Also bind touchstart
+    window.addEventListener('touchstart', this.handleTouchStart.bind(this), true);
+  } else {
+    this.eventList['touchmove'] = [event];
+  }
+  return this;
+};
+
+/**
+ * Remove a touch event
+ * @param {App.Models.Event} event
+ * @returns {App.Events}
+ */
+App.Events.removeTouch = function() {
+  if(this.eventList['touchmove']) {
+    this.eventList['touchmove'] = null;
+    this.removeListener('touchmove');
+    // Also bind touchstart
+    window.removeEventListener('touchstart', this.handleTouchStart.bind(this), true);
+  }
   return this;
 };
 
@@ -86,4 +122,52 @@ App.Events.remove = function(event) {
     this.removeListener(event.type);
   }
   return this;
+};
+
+App.Events.handleTouchStart = function(e) {
+  var e = e || window.event;
+  this.xDown = e.touches[0].clientX;
+  this.yDown = e.touches[0].clientY;
+};
+
+App.Events.handleTouchMove = function(event) {
+  // No touchstart happened?
+  if ( ! this.xDown || ! this.yDown ) {
+      return;
+  }
+
+  var xUp = event.original.touches[0].clientX;                                    
+  var yUp = event.original.touches[0].clientY;
+
+  var xDiff = this.xDown - xUp;
+  var yDiff = this.yDown - yUp;
+
+  if ( (Math.abs(xDiff) > 50 || Math.abs(yDiff) > 50) && Math.abs(xDiff) > Math.abs(yDiff) ) {/*most significant*/
+    if ( xDiff > 0  && event.cb.right) {/* right swipe */
+      var touchEvent = Object.assign({}, event);
+      touchEvent.element = event.element.right;
+      (event.cb.right)(touchEvent);
+      this.xDown = this.yDown = null;
+    }
+    else if(event.cb.left) {/* left swipe */
+      var touchEvent = Object.assign({}, event);
+      touchEvent.element = event.element.left;
+      (event.cb.left)(touchEvent);
+      this.xDown = this.yDown = null;
+    }                       
+  }
+  else {
+    if ( yDiff > 0 && event.cb.up) {/* up swipe */
+      var touchEvent = Object.assign({}, event);
+      touchEvent.element = event.element.up;
+      (event.cb.up)(touchEvent);
+      this.xDown = this.yDown = null;
+    }
+    else if(event.cb.down) { /* down swipe */
+      var touchEvent = Object.assign({}, event);
+      touchEvent.element = event.element.down;
+      (event.cb.down)(touchEvent);
+      this.xDown = this.yDown = null;
+    }                                                                 
+  }
 };

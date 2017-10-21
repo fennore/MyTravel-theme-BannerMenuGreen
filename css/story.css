@@ -33,7 +33,7 @@
   text-indent: -12em;
   top: 8em;
   bottom: 1em;
-  width: 1.5em;
+  width: 2.4em;
   background: 0 none;
 }
 .story button:focus,
@@ -52,15 +52,13 @@
   left: 0;
 }
 .story button.stage-prev .icon {
-  left: .2;
+  left: .2em;
 }
 .story button.stage-next {
   right: 0;
-  width: 2.4em;
-  border-left: 1px solid #ddd;
 }
 .story button.stage-next .icon {
-  right: 0;
+  right: .2em;
 }
 
 @media screen and (min-width: 720px) {
@@ -78,6 +76,7 @@
   }
   .story button.stage-next {
     width: 7.4em;
+    border-left: 1px solid #ddd;
   }
   .story button.stage-next .icon {
     right: 1em;

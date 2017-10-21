@@ -51,6 +51,13 @@ App.Components.StorySlide.prototype.render = function() {
     .remove(kpPrevEvent);
   // Add button events
   App.Events
+    .addTouch(new App.Models.Event(null, {
+      left: this.slide.btnPrev.getElement(),
+      right: this.slide.btnNext.getElement()
+    }, {
+      left: this.switchStory.bind(this),
+      right: this.switchStory.bind(this)
+    }))
     .add(new App.Models.Event('click', this.slide.btnNext.getElement(), this.switchStory.bind(this)))
     .add(new App.Models.Event('click', this.slide.btnPrev.getElement(), this.switchStory.bind(this)))
     .add(kpNextEvent)

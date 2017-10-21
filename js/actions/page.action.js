@@ -33,6 +33,7 @@ App.Actions.Page = {
    * @param {type} page
    */
   update : function() {
+    App.Events.removeTouch();
     App.Timers.resetAll();
     App.menuMain.reset();
     App.menuMinor.reset();

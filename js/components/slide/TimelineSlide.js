@@ -52,6 +52,13 @@ App.Components.TimelineSlide.prototype.render = function() {
     .remove(kpPrevEvent);
   // Add button events
   App.Events
+    .addTouch(new App.Models.Event(null, {
+      left: this.slide.btnPrev.getElement(),
+      right: this.slide.btnNext.getElement()
+    }, {
+      left: this.switchItem.bind(this),
+      right: this.switchItem.bind(this)
+    }))
     .add(new App.Models.Event('click', this.slide.btnSlideNext.getElement(), this.switchItem.bind(this)))
     .add(new App.Models.Event('click', this.slide.btnSlidePrev.getElement(), this.switchItem.bind(this)))
     .add(new App.Models.Event('click', this.slide.btnNext.getElement(), this.switchItem.bind(this)))
