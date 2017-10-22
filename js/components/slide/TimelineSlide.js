@@ -112,7 +112,7 @@ App.Components.TimelineSlide.prototype.append = function(items) {
  * @returns {App.Components.StorySlide.prototype}
  */
 App.Components.TimelineSlide.prototype.switchItem = function (event) {
-  if(this.slide.isLoading) {
+  if(this.slide.isLoading || this.slide.stage.toggle.isToggledOut()) {
     return this;
   }
   var LEFT = 37;

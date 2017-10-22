@@ -126,13 +126,16 @@ App.Events.remove = function(event) {
 
 App.Events.handleTouchStart = function(e) {
   var e = e || window.event;
-  this.xDown = e.touches[0].clientX;
-  this.yDown = e.touches[0].clientY;
+  
+  if(e.touches.length === 1) {
+    this.xDown = e.touches[0].clientX;
+    this.yDown = e.touches[0].clientY;
+  }
 };
 
 App.Events.handleTouchMove = function(event) {
   // No touchstart happened?
-  if ( ! this.xDown || ! this.yDown ) {
+  if ( ! this.xDown || ! this.yDown || event.original.touches.length !== 1) {
       return;
   }
 

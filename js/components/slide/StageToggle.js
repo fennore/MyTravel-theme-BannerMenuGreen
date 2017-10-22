@@ -34,10 +34,16 @@ App.Components.StageToggle.prototype.in = function() {
    App.Map.disableNavigation();
 }
 
+App.Components.StageToggle.prototype.isToggledOut = function() {
+  return this.parent.getElement().className && this.parent.getElement().className.indexOf(App.cssClasses.toggleOut) > -1;
+}
+
 App.Components.StageToggle.prototype.doToggle = function() {
-  if(this.parent.getElement().className && this.parent.getElement().className.indexOf(App.cssClasses.toggleOut) > -1) {
+  if(this.isToggledOut()) {
     this.in();
+    this.parent.parent.enableButtons();
   } else {
     this.out();
+    this.parent.parent.disableButtons();
   }
 };
