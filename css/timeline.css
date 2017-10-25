@@ -195,8 +195,8 @@ figcaption.empty {
 }
 #slide-jumper:hover {
   cursor: pointer;
-  height: 6em;
-  bottom: -2em;
+  height: 10em;
+  bottom: -4em;
   overflow-y: scroll;
   z-index: 999;
 }
