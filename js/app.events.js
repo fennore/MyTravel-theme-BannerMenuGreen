@@ -1,3 +1,14 @@
+/**
+ * @todo, a lot, maybe find some library or something, time to start working with vue? xD
+ * Let's set some rules:
+ * App.Events are for simple basic 1 on 1 events between element and action.
+ * Click unique specific element => do unique action
+ * This is not supposed to be used to work for a list of elements performing a similar action (yet)
+ * Some restriction apply to events themselves:
+ * - Touch works with single touch only and there are callbacks for up, down, left and right
+ * - mouse button events (click, mouseup, mousedown) only work on main mouse button (usually left click)
+ * For more complex events you can still use window.addEventListener and window.removeEventlistener
+ */
 App.Events.eventList = {};
 
 /**
@@ -9,7 +20,11 @@ App.Events.eventsListener = function(e) {
   var e = e || window.event;
   var target = e.target;
   var code = e.keyCode || e.which;
-  for(var k = 0; this.eventList[e.type] && k < this.eventList[e.type].length; k++){
+  // For button events only act on main button, shortcircuit otherwise;
+  if(!(typeof e.button === 'undefined' || e.button === null) && e.button !== 0) {
+    return;
+  }
+  for(var k = 0; this.eventList[e.type] && k < this.eventList[e.type].length; k++) {
     var event = this.eventList[e.type][k];
     event.original = e;
     // Events on target

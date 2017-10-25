@@ -107,6 +107,9 @@ App.Components.TimelineCarrousel.prototype.doClearTransition = function() {
  */
 App.Components.TimelineCarrousel.prototype.switchToItem = function(event) {
   var target = event.target;
+  if(!(typeof event.button === 'undefined' || event.button === null) && event.button !== 0) {
+    return;
+  }
   if(target.tagName === 'IMG' && target.parentNode.parentNode === this.carrouselElement) {
     var newPosition = getIndex(target.parentNode);
     if(newPosition >= this.parent.moveNext) {
