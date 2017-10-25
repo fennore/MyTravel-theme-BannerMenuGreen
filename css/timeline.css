@@ -86,7 +86,7 @@ figcaption.empty {
   position: absolute;
   bottom: 40%;
   width: 1.4em;
-  height: 4em;
+  height: 1.4em;
   left: .25em;
 }
 .timeline figure button.retract .icon {
@@ -336,6 +336,8 @@ figcaption.empty {
   }
   .timeline figure button .icon {
     left: 1em;
+    width: 3em;
+    height: 3em;
   }
   .timeline figure button.stage-next .icon {
     right: 1em;

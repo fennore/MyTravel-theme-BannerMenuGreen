@@ -46,7 +46,8 @@
   position: absolute;
   top: 50%;
   width: 1.4em;
-  height: 2em;
+  height: 1.4em;
+  margin-top: -.7em;
 }
 .story button.stage-prev {
   left: 0;
@@ -70,6 +71,11 @@
   }
   .story button {
     width: 3em;
+  }
+  .story button .icon {
+    width: 2em;
+    height: 2em;
+    margin-top: -2em;
   }
   .story button.stage-prev .icon {
     left: 1em;
