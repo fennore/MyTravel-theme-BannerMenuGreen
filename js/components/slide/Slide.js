@@ -26,6 +26,8 @@ App.Components.Slide = function(slideData) {
   this.carrousel = slideData.carrousel || null;
   this.stage = slideData.stage || null;
   this.pager = slideData.pager || null;
+  // parent switch callback @todo fix this when updating with inheritance
+  this.parentSwitchCallback;
   //
   this.storageKey = slideData.storageKey;
   //
@@ -76,6 +78,9 @@ App.Components.Slide.prototype.render = function() {
   }
   if(this.btnSlidePrev) {
     this.btnSlidePrev.render();
+  }
+  if(!this.parentSwitchCallback) {
+    this.parentSwitchCallback = this.switchToItem;
   }
 };
 
@@ -197,6 +202,8 @@ App.Components.Slide.prototype.switchToItem = function(offset) {
     // Do absolutely nothing!
     return;
   }
+  // old absolute position
+  var oldFocus = this.currentItem;
   // Batch base start
   var newInit = this.calculateSlideBase(offset);
   var diff = newInit - this.init;
@@ -208,6 +215,7 @@ App.Components.Slide.prototype.switchToItem = function(offset) {
       this.preTransformAdjust(diff);
       this.carrousel.trim(0, diff);
     }
+    oldFocus = this.currentItem - diff;
   }
   this.init = newInit; 
   this.newCurrentItem = offset - this.init;
@@ -217,7 +225,7 @@ App.Components.Slide.prototype.switchToItem = function(offset) {
     addClass(this.stage.stageElement, App.cssClasses.loading);
   }
   if(this.carrousel) {
-    rmClass(this.carrousel.carrouselElement.children[this.currentItem - diff], App.cssClasses.focus);
+    rmClass(this.carrousel.carrouselElement.children[oldFocus], App.cssClasses.focus);
   }
 
   this.currentItem = this.newCurrentItem;
@@ -284,7 +292,7 @@ App.Components.Slide.prototype.append = function(items) {
  * @returns {App.Components.Slide}
  */
 App.Components.Slide.prototype.leftTrim = function() {
-  var diff = this.dataList.length - this.sizeSlide;
+  var diff = this.dataList.length - Math.min(this.sizeSlide, this.total - this.init);
   var offset = 0;
   if(diff > 0) {
     // Update state for trim on the left

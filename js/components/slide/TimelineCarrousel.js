@@ -108,7 +108,14 @@ App.Components.TimelineCarrousel.prototype.doClearTransition = function() {
 App.Components.TimelineCarrousel.prototype.switchToItem = function(event) {
   var target = event.target;
   if(target.tagName === 'IMG' && target.parentNode.parentNode === this.carrouselElement) {
-    this.parent.switchToItem(this.parent.init + getIndex(target.parentNode));
+    var newPosition = getIndex(target.parentNode);
+    if(newPosition >= this.parent.moveNext) {
+      this.parent.parentSwitchCallback(new App.Models.Event('click', this.parent.btnSlideNext.getElement()));
+    } else if(newPosition <= this.parent.movePrev) {
+      this.parent.parentSwitchCallback(new App.Models.Event('click', this.parent.btnSlidePrev.getElement()));
+    } else {
+      this.parent.switchToItem(this.parent.init + newPosition);
+    }
   }
 };
 

@@ -159,11 +159,16 @@ App.Components.StorySlide.prototype.switchStory = function (event) {
     reqStart = batchBase;
   }
   
+  // Set slide as loading
+  if(cbAddSlideItems) {
+    this.slide.isLoading = true;
+  }
+  // Update slide state
+  this.slide.switchToItem(newAbsolutePosition);
+  // Execute callbacks to add Stories
   if(cbAddSlideItems) {
     cbAddSlideItems(this, reqStart, reqCount);
   }
   
-  // Update slide state
-  this.slide.switchToItem(newAbsolutePosition);
   return this;
 };

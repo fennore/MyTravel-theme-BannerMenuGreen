@@ -39,6 +39,7 @@ App.Components.TimelineSlide = function() {
     })
   });
   this.slide.setInitialPositions();
+  this.slide.parentSwitchCallback = this.switchItem.bind(this);
 };
 
 App.Components.TimelineSlide.prototype.render = function() {
@@ -174,12 +175,17 @@ App.Components.TimelineSlide.prototype.switchItem = function (event) {
     reqStart = batchBase;
   }
   
+  // Set slide as loading
+  if(cbAddSlideItems) {
+    this.slide.isLoading = true;
+  }
+  // Update currentItem state
+  this.slide.switchToItem(newAbsolutePosition);
+  // Execute callbacks to add Items
   if(cbAddSlideItems) {
     cbAddSlideItems(this, reqStart, reqCount);
   }
   
-  // Update currentItem state
-  this.slide.switchToItem(newAbsolutePosition);
   return this;
 };
 
