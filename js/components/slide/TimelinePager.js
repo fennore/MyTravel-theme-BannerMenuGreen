@@ -36,7 +36,7 @@ App.Components.TimelinePager.prototype.setParent = function(parent) {
 App.Components.TimelinePager.prototype.switchToItem = function(event) {
   var target = event.target;
   if(target.tagName === 'BUTTON' && target.parentNode.id === this.id) {
-    this.parent.switchToItem(this.parent.moveRoot + getIndex(target));
+    this.parent.switchToItem(this.parent.init + this.parent.moveRoot + getIndex(target));
   }
 };
 

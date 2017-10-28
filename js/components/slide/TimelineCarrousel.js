@@ -112,7 +112,7 @@ App.Components.TimelineCarrousel.prototype.switchToItem = function(event) {
   }
   if(target.tagName === 'IMG' && target.parentNode.parentNode === this.carrouselElement) {
     var newPosition = getIndex(target.parentNode);
-    if(newPosition >= this.parent.moveNext) {
+    if(newPosition >= this.parent.moveNext && this.parent.moveNext > this.parent.moveRoot) {
       this.parent.parentSwitchCallback(new App.Models.Event('click', this.parent.btnSlideNext.getElement()));
     } else if(newPosition <= this.parent.movePrev) {
       this.parent.parentSwitchCallback(new App.Models.Event('click', this.parent.btnSlidePrev.getElement()));
