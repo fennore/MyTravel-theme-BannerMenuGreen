@@ -20,7 +20,7 @@ Element.prototype.removeDataAttribute = function(name) {
 };
 Element.prototype.setDataAttributes = function(items) {
 	if ( items instanceof Object ) {
-		for (attr in items) if ( items.hasOwnProperty(attr) ) this.setDataAttribute(attr, items[attr]);
+		for (var attr in items) if ( items.hasOwnProperty(attr) ) this.setDataAttribute(attr, items[attr]);
 	}
 };
 if ( !Element.prototype.__lookupGetter__("dataset") ) {
@@ -33,8 +33,8 @@ if ( !Element.prototype.__lookupGetter__("dataset") ) {
 	  } catch(e) { var HTML5_DOMStringMap = document.createElement("div") } // use a DOM object for IE8
 	  function lambda(o) { return function(){return o} };
 	  function dataSetterFunc(ref_el, attrName) { return function(val){ return ref_el.setDataAttribute(attrName, val) } };
-	  for ( attr in this.attributes ) {
-		if ( this.attributes.hasOwnProperty(attr) && this.attributes[attr].name && /^data-[a-z_\-\d]*$/i.test(this.attributes[attr].name) ) {
+	  for (var attr in this.attributes ) {
+		if ( this.attributes.hasOwnProperty(attr) && this.attributes[attr].name && (/^data-[a-z_\-\d]*$/i).test(this.attributes[attr].name) ) {
 			var attrName = toCamelCase(this.attributes[attr].name.substr(5)), attrVal = this.attributes[attr].value;
 			try {
 				HTML5_DOMStringMap.__defineGetter__(attrName, lambda(attrVal || '') );

@@ -11,15 +11,15 @@ App = {
     DefaultLocation: {lat: 53, lng: 11},
     MapZoomDefault: 7,
     MapZoomLocation: 15,
-    MapZoomOverview: 4,
+    MapZoomOverview: 4
   },
   // Expansive objects
   Models : function() {},
   Components : function() {},
-  Events : new function() {},
+  Events : new function() {}(),
   Actions : function() {},
   Storage : function() {},
-  Timers : new function() {},
+  Timers : new function() {}(),
   //
   GmapStyle : function() {},
   // Some css class collection

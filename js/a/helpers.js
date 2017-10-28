@@ -56,7 +56,7 @@ var offset = function (el) {
   var rect = el.getBoundingClientRect(),
           scrollLeft = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft,
           scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-  return {top: rect.top + scrollTop, left: rect.left + scrollLeft}
+  return {top: rect.top + scrollTop, left: rect.left + scrollLeft};
 };
 var getStyle = function (e, styleName) {
   var styleValue = "";
@@ -80,8 +80,10 @@ var getStyle = function (e, styleName) {
  * @returns {ActiveXObject|XMLHttpRequest} The Request object.
  */
 var request = function (method, path, data, callback) {
-  if(!method)
+  if(!method) {
     method = 'GET';
+  }
+  
   try {
     var xhr = XMLHttpRequest || ActiveXObject,
             x = new xhr('MSXML2.XMLHTTP.3.0');
@@ -93,7 +95,7 @@ var request = function (method, path, data, callback) {
       try {
         JSON.parse(data);
         x.setRequestHeader('Content-type', 'application/json');
-      } catch (e) {
+      } catch (jsonParseError) {
         x.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
       }
     }
@@ -114,10 +116,11 @@ var request = function (method, path, data, callback) {
         callback(response);
       }
     };
-    if(Array.isArray(data))
+    if(Array.isArray(data)) {
       data = data.join('&');
+    }
     x.send(data);
-  } catch (e) {
+  } catch (requestError) {
     if (window.console) {
       //console.log(e);
     }
@@ -131,7 +134,7 @@ function toDashed(name) {
   return name.replace(/([A-Z])/g, function(u) {
     return "-" + u.toLowerCase();
   });
-};
+}
 
 var fn;
 
