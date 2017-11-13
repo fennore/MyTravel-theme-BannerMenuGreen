@@ -150,7 +150,7 @@ App.Components.TimelineSlide.prototype.switchItem = function (event) {
   var reqStart = this.slide.init + l;
   var batchBase = this.slide.calculateSlideBase(newAbsolutePosition);
   // Checks
-  var checkExtremeR = newPosition >= l + this.slide.sizeRequest;
+  var checkExtremeR = newPosition >= l + this.slide.sizeRequest && batchBase - this.slide.init >= 105;
   var checkExtremeL = newAbsolutePosition < Math.max(this.slide.init - this.slide.sizeRequest, 0);
   var checkMidNext = newPosition >= l;
   var checkMidPrev = (newPosition < 0 && this.slide.init >= this.slide.sizeRequest*2);
